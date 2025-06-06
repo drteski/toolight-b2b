@@ -1,0 +1,26 @@
+import type { GlobalConfig } from 'payload'
+
+export const TopBar: GlobalConfig = {
+  slug: 'top-bar',
+  label: 'Górny Pasek',
+  access: {
+    read: () => true,
+    update: () => true,
+  },
+  fields: [
+    {
+      name: 'topBar',
+      label: '',
+      type: 'group',
+      fields: [
+        {
+          name: 'topBarText',
+          label: 'Tytuł',
+          type: 'text',
+          localized: true,
+          defaultValue: '*((Globalne > Górny Pasek))*',
+        },
+      ],
+    },
+  ],
+}
