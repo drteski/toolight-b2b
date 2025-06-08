@@ -17,8 +17,7 @@ const RootLayout = async ({ children, params }: { children: ReactNode; params: a
         <Providers>
           <TopBar />
           <Navbar />
-
-          {children}
+          <main>{children}</main>
         </Providers>
       </body>
     </html>

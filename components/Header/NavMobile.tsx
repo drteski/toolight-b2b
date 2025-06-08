@@ -1,23 +1,19 @@
 import React from 'react'
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import Flags from '@/components/Icons/Flags'
-import { locales } from '@/middleware'
 import Link from 'next/link'
 import { MenuIcon, XIcon } from 'lucide-react'
 
 import Logo from '@/components/Header/Logo'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 
-const NavMobile = ({ code }) => {
+const NavMobile = ({ code }: { code: string }) => {
   return (
     <div>
       <Sheet>
@@ -62,7 +58,7 @@ const NavMobile = ({ code }) => {
               </Link>
             </SheetDescription>
           </SheetHeader>
-          <SheetPrimitive.Close className="ring-offset-background cursor-pointer focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
+          <SheetPrimitive.Close className="ring-offset-background cursor-pointer focus:ring-ring data-[state=open]:bg-secondary absolute top-5 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
             <XIcon className="size-8" />
             <span className="sr-only">Close</span>
           </SheetPrimitive.Close>
