@@ -19,7 +19,6 @@ const Search = () => {
   const { code } = useCurrentLocale()
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
-  console.log(data)
   return (
     <div>
       <Drawer direction="top">

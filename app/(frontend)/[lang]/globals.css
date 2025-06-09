@@ -112,11 +112,6 @@
 }
 
 
-html {
-	height: 3000px;
-}
-
-
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
@@ -158,7 +153,6 @@ html {
 	--spacing-tablet: var(--tablet);
 	--spacing-mobile: var(--mobile);
 	--font-supreme: var(--supreme);
-	--color-dupa: var(--dupa);
 	--breakpoint-*: initial;
 	--breakpoint-sm: 568px;
 	--breakpoint-xs: 991px;
