@@ -1,6 +1,12 @@
-const LangPage = async ({ params }: { params: any }) => {
-  const { lang } = await params
-  return <>{lang}</>
+const CategoryPage = async ({ params }: { params: any }) => {
+  const { lang, catalog, category } = await params
+  return (
+    <>
+      {lang}
+      {catalog}
+      {category}
+    </>
+  )
 }
 
-export default LangPage
+export default CategoryPage

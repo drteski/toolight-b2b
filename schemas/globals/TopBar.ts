@@ -20,6 +20,20 @@ export const TopBar: GlobalConfig = {
           localized: true,
           defaultValue: '*((Globalne > Górny Pasek))*',
         },
+        {
+          name: 'languageSelect',
+          type: 'group',
+          label: 'Wybór języka',
+          localized: true,
+          fields: [
+            {
+              name: 'topBarLocaleText',
+              label: 'Etykieta wyboru języka',
+              type: 'text',
+              defaultValue: 'Wybierz język',
+            },
+          ],
+        },
       ],
     },
   ],

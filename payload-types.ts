@@ -834,6 +834,9 @@ export interface TopBar {
   id: number;
   topBar?: {
     topBarText?: string | null;
+    languageSelect?: {
+      topBarLocaleText?: string | null;
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -954,6 +957,7 @@ export interface Layout {
   id: number;
   header?: {
     searchPlaceholder?: string | null;
+    searchPlaceholderDropdown?: string | null;
   };
   sections?: {
     popularCategories?: string | null;
@@ -1008,6 +1012,11 @@ export interface TopBarSelect<T extends boolean = true> {
     | T
     | {
         topBarText?: T;
+        languageSelect?:
+          | T
+          | {
+              topBarLocaleText?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1120,6 +1129,7 @@ export interface LayoutSelect<T extends boolean = true> {
     | T
     | {
         searchPlaceholder?: T;
+        searchPlaceholderDropdown?: T;
       };
   sections?:
     | T

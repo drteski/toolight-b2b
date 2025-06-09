@@ -1,69 +1,51 @@
 import React from 'react'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
 import Link from 'next/link'
-import { MenuIcon, XIcon } from 'lucide-react'
+import { MenuIcon } from 'lucide-react'
 
-import Logo from '@/components/Header/Logo'
-import * as SheetPrimitive from '@radix-ui/react-dialog'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
 
-const NavMobile = ({ code }: { code: string }) => {
+interface MenuItem {
+  mainMenuLinkTitle: string
+  mainMenuLinkUrl: string
+}
+
+const NavMobile = ({ code, items }: { code: string; items: MenuItem[] }) => {
   return (
     <div>
-      <Sheet>
-        <SheetTrigger className="p-3">
+      <Drawer>
+        <DrawerTrigger className="flex items-center justify-center p-2">
           <MenuIcon className="size-8 text-foreground" />
-        </SheetTrigger>
-        <SheetContent className="w-screen">
-          <SheetHeader>
-            <SheetTitle>
-              <Logo className="h-10" />
-            </SheetTitle>
-            <SheetDescription className="flex flex-col gap-8 items-end justify-center h-screen pb-20 text-foreground">
+        </DrawerTrigger>
+        <DrawerContent className="">
+          <DrawerHeader>
+            <DrawerTitle></DrawerTitle>
+          </DrawerHeader>
+          <DrawerDescription className="flex flex-col gap-8 items-center justify-center text-foreground">
+            {items.map((item) => (
               <Link
-                className="uppercase font-medium text-3xl hover:text-accent transition-colors"
-                href={`/${code}/katalog`}
+                key={item.mainMenuLinkUrl}
+                className="uppercase text-2xl hover:text-accent transition-colors"
+                href={`/${code}/${item.mainMenuLinkUrl}`}
               >
-                Produkty
+                {item.mainMenuLinkTitle}
               </Link>
-              <Link
-                className="uppercase font-medium text-3xl hover:text-accent transition-colors"
-                href="#about-us"
-              >
-                O nas
-              </Link>
-              <Link
-                className="uppercase font-medium text-3xl hover:text-accent transition-colors"
-                href={`/${code}/punkty-sprzedazy`}
-              >
-                Punkty sprzedazy
-              </Link>
-              <Link
-                className="uppercase font-medium text-3xl hover:text-accent transition-colors"
-                href={`/${code}/wsparcie`}
-              >
-                Wsparcie
-              </Link>
-              <Link
-                className="uppercase font-medium text-3xl hover:text-accent transition-colors"
-                href="#contact"
-              >
-                Kontakt
-              </Link>
-            </SheetDescription>
-          </SheetHeader>
-          <SheetPrimitive.Close className="ring-offset-background cursor-pointer focus:ring-ring data-[state=open]:bg-secondary absolute top-5 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
-            <XIcon className="size-8" />
-            <span className="sr-only">Close</span>
-          </SheetPrimitive.Close>
-        </SheetContent>
-      </Sheet>
+            ))}
+          </DrawerDescription>
+          <DrawerFooter className="h-[100px]">
+            {/*<Button>Submit</Button>*/}
+            <DrawerClose>{/*<Button variant="outline">Cancel</Button>*/}</DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   )
 }

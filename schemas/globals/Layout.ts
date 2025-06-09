@@ -3,6 +3,10 @@ import type { GlobalConfig } from 'payload'
 export const Layout: GlobalConfig = {
   slug: 'layout',
   label: 'Zawartość strony',
+  access: {
+    read: () => true,
+    update: () => true,
+  },
   fields: [
     {
       type: 'tabs',
@@ -13,6 +17,13 @@ export const Layout: GlobalConfig = {
           fields: [
             {
               name: 'searchPlaceholder',
+              label: 'Tekst na przycisku wyszukiwarki',
+              type: 'text',
+              localized: true,
+              defaultValue: '---',
+            },
+            {
+              name: 'searchPlaceholderDropdown',
               label: 'Tekst na pasku wyszukiwania',
               type: 'text',
               localized: true,
