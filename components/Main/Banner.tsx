@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { FreeMode, Navigation, Thumbs, A11y } from 'swiper/modules'
+import { FreeMode, Navigation, Thumbs, A11y, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
@@ -10,8 +10,9 @@ import Image from 'next/image'
 import useCurrentLocale from '@/hooks/useCurrentLocale'
 import useWindowSize from '@/hooks/useWindowSize'
 import Loading from '@/app/(frontend)/[lang]/loading'
+import { Swiper as SwiperClass } from 'swiper/types'
 
-interface BannerProps {
+interface BannerItemProps {
   id: string
   title: string
   sizes: {
@@ -23,22 +24,28 @@ interface BannerProps {
   }
 }
 
-const Banner = () => {
-  const { code } = useCurrentLocale()
-  const swiperRef = useRef<any>(null)
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
-  const { data, isLoading } = useGetPayloadData('banners', false, code)
+const BannerData = ({ banners }: { banners: BannerItemProps[] }) => {
+  const swiperRef = useRef<SwiperClass | null>(null)
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
   const { width }: { width: number } = useWindowSize()
+  const { data, isLoading } = useGetPayloadData('layout', true, 'pl')
   if (isLoading) return <Loading />
   return (
-    <div className="w-full">
+    <>
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
         grabCursor
+        autoplay={
+          data.banners.bannerAutoplay && {
+            delay: data.banners.bannerAutoplayDelay * 1000,
+            pauseOnMouseEnter: true,
+            waitForTransition: true,
+          }
+        }
         thumbs={{ swiper: thumbsSwiper }}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        modules={[FreeMode, Navigation, Thumbs, A11y]}
+        modules={[FreeMode, Navigation, Thumbs, A11y, Autoplay]}
         className="banners overflow-hidden h-[70dvh]"
         a11y={{
           prevSlideMessage: 'Poprzedni baner',
@@ -46,7 +53,7 @@ const Banner = () => {
           slideLabelMessage: 'Slajd {{index}} z {{slidesLength}}',
         }}
       >
-        {data.docs.map((banner: BannerProps) => (
+        {banners.map((banner: BannerItemProps) => (
           <SwiperSlide key={banner.id}>
             <Image
               src={banner.sizes.main.url}
@@ -60,22 +67,34 @@ const Banner = () => {
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={'auto'}
-        centeredSlides
+        spaceBetween={16}
+        slidesPerView={width <= 991 ? 'auto' : 4}
+        centeredSlides={width <= 991}
         watchSlidesProgress
         className="mx-auto my-0 max-w-inner-wrapper"
       >
-        {data.docs.map((banner: BannerProps) => {
+        {banners.map((banner: BannerItemProps) => {
           return (
-            <SwiperSlide key={`thumb-${banner.id}`} className="group w-[200px]! xs:w-1/4!">
-              <span className="cursor-pointer font-medium py-4 flex items-center justify-center border-t-4 border-transparent group-[.swiper-slide-thumb-active]:text-primary group-[.swiper-slide-thumb-active]:border-primary transition-colors">
+            <SwiperSlide key={`thumb-${banner.id}`} className="group w-auto max-w-1/2 xs:max-w-1/4">
+              <span className="cursor-pointer uppercase font-medium py-4 flex items-center justify-center border-t-4 border-transparent group-[.swiper-slide-thumb-active]:text-primary group-[.swiper-slide-thumb-active]:border-primary transition-colors">
                 {banner.title}
               </span>
             </SwiperSlide>
           )
         })}
       </Swiper>
+    </>
+  )
+}
+
+const Banner = () => {
+  const { code } = useCurrentLocale()
+  const { data, isLoading } = useGetPayloadData('banners', false, code)
+
+  if (isLoading) return <Loading />
+  return (
+    <div className="w-full">
+      <BannerData banners={data.docs} />
     </div>
   )
 }

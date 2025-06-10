@@ -1,4 +1,4 @@
-import Banner from '@/components/Banner'
+import Banner from '@/components/Main/Banner'
 import PopularCategories from '@/components/Main/PopularCategories'
 import AboutUs from '@/components/Main/AboutUs'
 import Contact from '@/components/Main/Contact'
@@ -6,7 +6,7 @@ import Contact from '@/components/Main/Contact'
 export const metadata = {
   title: 'Toolight',
 }
-export default async function HomePage() {
+const HomePage = () => {
   return (
     <>
       <Banner />
@@ -16,3 +16,5 @@ export default async function HomePage() {
     </>
   )
 }
+
+export default HomePage

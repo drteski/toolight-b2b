@@ -12,11 +12,9 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import Loading from '@/app/(frontend)/[lang]/loading'
-import useCurrentLocale from '@/hooks/useCurrentLocale'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
 
-const Search = () => {
-  const { code } = useCurrentLocale()
+const Search = ({ code }: { code: string }) => {
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
   return (

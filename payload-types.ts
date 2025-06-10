@@ -206,6 +206,10 @@ export interface Category {
    * Generowany automatycznie na podstawie tytułu
    */
   slug?: string | null;
+  /**
+   * Wybierz link z Menu Głównego
+   */
+  relatedMainMenuLink: undefined;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -571,6 +575,7 @@ export interface ProductsSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  relatedMainMenuLink?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -959,6 +964,13 @@ export interface Layout {
     searchPlaceholder?: string | null;
     searchPlaceholderDropdown?: string | null;
   };
+  banners?: {
+    bannerAutoplay?: boolean | null;
+    /**
+     * w sekundach
+     */
+    bannerAutoplayDelay?: number | null;
+  };
   sections?: {
     popularCategories?: string | null;
     aboutUs?: string | null;
@@ -1130,6 +1142,12 @@ export interface LayoutSelect<T extends boolean = true> {
     | {
         searchPlaceholder?: T;
         searchPlaceholderDropdown?: T;
+      };
+  banners?:
+    | T
+    | {
+        bannerAutoplay?: T;
+        bannerAutoplayDelay?: T;
       };
   sections?:
     | T

@@ -173,3 +173,38 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+
+.privacy-content {
+	@apply text-foreground tracking-tight text-left!;
+}
+
+
+.privacy-content h2 {
+	@apply text-2xl font-medium py-4;
+}
+
+
+.privacy-content h3 {
+	@apply text-xl font-medium py-4;
+}
+
+
+.privacy-content .list-number {
+	@apply list-decimal list-outside ml-4;
+}
+
+
+.privacy-content .list-number > .nestedListItem li {
+	@apply list-[lower-roman] list-outside ml-4;
+}
+
+
+.privacy-content .list-number > li {
+	@apply ml-4;
+}
+
+
+.privacy-content li::marker {
+	@apply font-medium;
+}

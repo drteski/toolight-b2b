@@ -32,6 +32,27 @@ export const Layout: GlobalConfig = {
           ],
         },
         {
+          name: 'banners',
+          label: 'Banery',
+          fields: [
+            {
+              name: 'bannerAutoplay',
+              label: 'Automatyczna zmiana baneru na kolejny',
+              type: 'checkbox',
+              defaultValue: true,
+            },
+            {
+              name: 'bannerAutoplayDelay',
+              label: 'Czas zmiany baneru na kolejny',
+              type: 'number',
+              defaultValue: 1,
+              admin: {
+                description: 'w sekundach',
+              },
+            },
+          ],
+        },
+        {
           name: 'sections',
           label: 'Sekcje strony',
           fields: [

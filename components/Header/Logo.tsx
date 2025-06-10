@@ -1,5 +1,7 @@
+import React from 'react'
+
 interface LogoProps {
-  style?: any
+  style?: React.CSSProperties
   className?: string
 }
 

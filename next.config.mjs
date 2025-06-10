@@ -7,6 +7,7 @@ const nextConfig = {
     staticGenerationMaxConcurrency: 2,
     staticGenerationMinPagesPerWorker: 25,
   },
+  transpilePackages: ['@payloadcms/ui'],
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

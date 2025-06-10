@@ -6,7 +6,7 @@ const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) =
   const getCountry = async () => {
     return await axios
       .get(`/api/${globals ? 'globals' : ''}/${endpoint}/?depth=3&draft=false&locale=${locale}`, {
-        credentials: 'include',
+        // credentials: 'include',
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/x-www-form-urlencoded',
