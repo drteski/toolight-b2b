@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import generateSlug from '@/schemas/hooks/generateSlug'
-import { MainMenuLinkSelector } from '@/schemas/components/MainMenuLinkSelector'
+import { updateMainMenuOptions } from '@/schemas/hooks/updateMainMenuOptions'
+import payload from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -40,18 +41,11 @@ export const Categories: CollectionConfig = {
     },
     {
       name: 'relatedMainMenuLink',
-      type: 'text', // UWAGA: nie select — bo pole value to text
+      type: 'select',
       label: 'Powiązany link z Menu Głównego',
       localized: true,
       required: true,
-      admin: {
-        position: 'sidebar',
-        isClearable: false,
-        description: 'Wybierz link z Menu Głównego',
-        components: {
-          Field: MainMenuLinkSelector,
-        },
-      },
+      options: [],
     },
   ],
   admin: {

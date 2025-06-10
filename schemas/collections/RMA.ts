@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { generateRmaId } from '@/schemas/hooks/generateRmaId'
+import generateRmaId from '@/schemas/hooks/generateRmaId'
 
 export const RMA: CollectionConfig = {
   slug: 'rma',

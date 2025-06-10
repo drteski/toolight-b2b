@@ -46,6 +46,7 @@ export const Layout: GlobalConfig = {
               label: 'Czas zmiany baneru na kolejny',
               type: 'number',
               defaultValue: 1,
+              required: true,
               admin: {
                 description: 'w sekundach',
               },

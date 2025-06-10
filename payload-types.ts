@@ -206,10 +206,7 @@ export interface Category {
    * Generowany automatycznie na podstawie tytułu
    */
   slug?: string | null;
-  /**
-   * Wybierz link z Menu Głównego
-   */
-  relatedMainMenuLink: undefined;
+  relatedMainMenuLink: string;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -964,12 +961,12 @@ export interface Layout {
     searchPlaceholder?: string | null;
     searchPlaceholderDropdown?: string | null;
   };
-  banners?: {
+  banners: {
     bannerAutoplay?: boolean | null;
     /**
      * w sekundach
      */
-    bannerAutoplayDelay?: number | null;
+    bannerAutoplayDelay: number;
   };
   sections?: {
     popularCategories?: string | null;
