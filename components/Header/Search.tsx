@@ -11,8 +11,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import Loading from '@/app/(frontend)/[lang]/loading'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
+import Loading from '@/app/(frontend)/[lang]/loading'
 
 const Search = ({ code }: { code: string }) => {
   const { data, isLoading } = useGetPayloadData('layout', true, code)

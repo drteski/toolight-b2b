@@ -3,6 +3,30 @@ import React from 'react'
 export type CurrentLocale = { label: string; code: string }
 export type Locale = { locale: string }
 
+export type SubPageProps = {
+  children: React.ReactNode
+  params: {
+    lang: string
+    subpage: string
+  }
+}
+
+export type CategoryPageProps = {
+  params: {
+    lang: string
+    subpage: string
+    category: string
+  }
+}
+export type ProductPageProps = {
+  params: {
+    lang: string
+    subpage: string
+    category: string
+    product: string
+  }
+}
+
 // HOOKS
 
 export type WindowSize = {
@@ -40,10 +64,22 @@ export type ContactDataProps = {
   layout: Layout
 }
 
+export type BreadcrumbsProps = {
+  locale: string
+  crumbs: string[]
+  crumb?: string
+}
+
+export type BreadcrumbProps = {
+  locale: string
+  crumb: string
+}
+
 // PAYLOAD DATA
 
 export type MainMenuOrder = { mainMenuOrder: number }
 export type MainMenuItem = {
+  id: string
   mainMenuLinkTitle: string
   mainMenuLinkUrl: string
 }

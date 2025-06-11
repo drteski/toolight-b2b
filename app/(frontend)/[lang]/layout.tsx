@@ -16,7 +16,7 @@ const RootLayout = async ({
 
   return (
     <html lang={lang}>
-      <body className="antialiased">
+      <body className="antialiased"> 
         <Providers>
           <TopBar locale={lang} />
           <Navbar locale={lang} />

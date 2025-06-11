@@ -78,6 +78,13 @@ export const Layout: GlobalConfig = {
               localized: true,
               defaultValue: '---',
             },
+            {
+              name: 'homePage',
+              label: 'Nagłówek strona główna',
+              type: 'text',
+              localized: true,
+              defaultValue: '---',
+            },
           ],
         },
         {

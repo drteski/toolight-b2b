@@ -7,8 +7,8 @@ import NavDesktop from '@/components/Header/NavDesktop'
 import Search from '@/components/Header/Search'
 import NavMobile from '@/components/Header/NavMobile'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
-import Loading from '@/app/(frontend)/[lang]/loading'
 import { Locale, MainMenuOrder } from '@/lib/types'
+import Loading from '@/app/(frontend)/[lang]/loading'
 
 const Navbar = ({ locale }: Locale) => {
   const scrollY = useWindowScrollY()

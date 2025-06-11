@@ -8,7 +8,7 @@ const NavDesktop = ({ code, items }: NavProps) => {
     <nav className="flex xs:gap-3 lg:gap-6 xl:gap-8 items-center">
       {items.map((item) => (
         <Link
-          key={item.mainMenuLinkUrl}
+          key={item.id}
           className="uppercase font-medium text-sm hover:text-accent transition-colors"
           href={`/${code}/${item.mainMenuLinkUrl}`}
         >

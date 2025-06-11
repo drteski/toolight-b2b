@@ -983,6 +983,7 @@ export interface Layout {
     popularCategories?: string | null;
     aboutUs?: string | null;
     contact?: string | null;
+    homePage?: string | null;
   };
   contact?: {
     colaborationTitle?: string | null;
@@ -1150,6 +1151,7 @@ export interface LayoutSelect<T extends boolean = true> {
         popularCategories?: T;
         aboutUs?: T;
         contact?: T;
+        homePage?: T;
       };
   contact?:
     | T

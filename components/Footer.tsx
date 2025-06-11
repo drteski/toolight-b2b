@@ -28,7 +28,9 @@ const Footer = ({ locale }: { locale: string }) => {
         </div>
         <div className="xs:justify-self-end">
           <Dialog>
-            <DialogTrigger className="font-medium">{data.privacy.title}</DialogTrigger>
+            <DialogTrigger className="font-medium cursor-pointer">
+              {data.privacy.title}
+            </DialogTrigger>
             <DialogContent className="max-w-[calc(100dvw_-_var(--spacing-padding))]! xs:max-w-[calc(70dvw_-_var(--spacing-padding))]!">
               <DialogHeader className="text-left">
                 <DialogTitle>{data.privacy.title}</DialogTitle>

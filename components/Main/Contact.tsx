@@ -173,7 +173,9 @@ const ContactForm = ({ layout }: ContactFormProps) => {
         <Label>
           <span className="text-red-500">*</span> {layout.contact.contactForm.contactRequiredText}
         </Label>
-        <Button type="submit">{layout.contact.contactForm.contactCta}</Button>
+        <Button className="cursor-pointer" type="submit">
+          {layout.contact.contactForm.contactCta}
+        </Button>
       </form>
     </Form>
   )
@@ -187,11 +189,11 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
       <div className="block xs:hidden">
         <Accordion
           className="flex flex-col gap-padding"
-          defaultValue={data.departments[0].id}
+          defaultValue={data.departments[0].id && ''}
           type="single"
           collapsible
         >
-          {data.departments.map((item: Department) => (
+          {(data.departments || []).map((item: Department) => (
             <AccordionItem
               className="p-padding bg-neutral-100 rounded-xl flex flex-col gap-[calc(var(--spacing-padding)/2)]"
               key={item.id}
@@ -263,7 +265,7 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
       <div className="hidden xs:block">
         <Tabs orientation="vertical" defaultValue={data.departments[0].id} className="">
           <TabsList>
-            {data.departments.map((item: Department)  => (
+            {data.departments.map((item: Department) => (
               <TabsTrigger key={item.id} className="w-full p-2" value={item.id}>
                 {item.title}
               </TabsTrigger>

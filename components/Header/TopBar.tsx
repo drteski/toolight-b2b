@@ -15,8 +15,8 @@ import { locales } from '@/middleware'
 import { XIcon } from 'lucide-react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
-import Loading from '@/app/(frontend)/[lang]/loading'
 import { CurrentLocale, Locale } from '@/lib/types'
+import Loading from '@/app/(frontend)/[lang]/loading'
 
 const TopBar = ({ locale }: Locale) => {
   const { label, code } = locales.filter(
