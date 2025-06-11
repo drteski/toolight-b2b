@@ -1,13 +1,9 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
+import { NavProps } from '@/lib/types'
 
-interface MenuItem {
-  mainMenuLinkTitle: string
-  mainMenuLinkUrl: string
-}
-
-const NavDesktop = ({ code, items }: { code: string; items: MenuItem[] }) => {
+const NavDesktop = ({ code, items }: NavProps) => {
   return (
     <nav className="flex xs:gap-3 lg:gap-6 xl:gap-8 items-center">
       {items.map((item) => (

@@ -1,11 +1,6 @@
-import React from 'react'
+import { ComponentProps } from '@/lib/types'
 
-interface LogoProps {
-  style?: React.CSSProperties
-  className?: string
-}
-
-const Logo = (props: LogoProps) => {
+const Logo = (props: ComponentProps) => {
   const styles = {
     cls1: {
       fill: 'none',

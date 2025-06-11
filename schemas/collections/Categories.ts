@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import generateSlug from '@/schemas/hooks/generateSlug'
-import { updateMainMenuOptions } from '@/schemas/hooks/updateMainMenuOptions'
-import payload from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -41,11 +39,14 @@ export const Categories: CollectionConfig = {
     },
     {
       name: 'relatedMainMenuLink',
-      type: 'select',
+      type: 'relationship',
       label: 'Powiązany link z Menu Głównego',
+      relationTo: 'main-menu',
       localized: true,
       required: true,
-      options: [],
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
   admin: {

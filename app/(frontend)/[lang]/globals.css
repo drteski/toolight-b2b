@@ -159,13 +159,14 @@
 	--breakpoint-lg: 1200px;
 	--breakpoint-xl: 1440px;
 	--spacing-inner-wrapper: var(--inner-wrapper);
-	--spacing-padding: var(--pad)
+	--spacing-padding: var(--pad);
+	--spacing-padding-vertical: calc(var(--pad) * 2);
 }
 
 
 @layer base {
 	* {
-		@apply border-border outline-ring/50;
+		@apply border-border outline-ring/50 scroll-smooth;
 	}
 
 

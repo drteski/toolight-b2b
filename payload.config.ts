@@ -14,7 +14,7 @@ import { Categories } from '@/schemas/collections/Categories'
 import { Layout } from '@/schemas/globals/Layout'
 import { PopularCategories } from '@/schemas/globals/PopularCategories'
 import { TopBar } from '@/schemas/globals/TopBar'
-import { MainMenu } from '@/schemas/globals/MainMenu'
+import { MainMenu } from '@/schemas/collections/MainMenu'
 import { AboutUs } from '@/schemas/globals/AboutUs'
 import { Media } from '@/schemas/collections/Media'
 import { Footer } from '@/schemas/globals/Footer'
@@ -46,11 +46,12 @@ export default buildConfig({
     EnergyLabels,
     RMA,
     Banners,
+    MainMenu,
     PointOfSale,
     Users,
     Media,
   ],
-  globals: [TopBar, MainMenu, PopularCategories, AboutUs, Contact, Footer, Layout],
+  globals: [TopBar, PopularCategories, AboutUs, Contact, Footer, Layout],
   i18n: {
     supportedLanguages: { pl },
   },

@@ -11,23 +11,12 @@ import useCurrentLocale from '@/hooks/useCurrentLocale'
 import useWindowSize from '@/hooks/useWindowSize'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import { Swiper as SwiperClass } from 'swiper/types'
+import { BannerItem, BannerProps } from '@/lib/types'
 
-interface BannerItemProps {
-  id: string
-  title: string
-  sizes: {
-    main: {
-      url: string
-      width: number
-      height: number
-    }
-  }
-}
-
-const BannerData = ({ banners }: { banners: BannerItemProps[] }) => {
+const BannerData = ({ banners }: BannerProps) => {
   const swiperRef = useRef<SwiperClass | null>(null)
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null)
-  const { width }: { width: number } = useWindowSize()
+  const { width } = useWindowSize()
   const { data, isLoading } = useGetPayloadData('layout', true, 'pl')
   if (isLoading) return <Loading />
   return (
@@ -53,7 +42,7 @@ const BannerData = ({ banners }: { banners: BannerItemProps[] }) => {
           slideLabelMessage: 'Slajd {{index}} z {{slidesLength}}',
         }}
       >
-        {banners.map((banner: BannerItemProps) => (
+        {banners.map((banner: BannerItem) => (
           <SwiperSlide key={banner.id}>
             <Image
               src={banner.sizes.main.url}
@@ -73,7 +62,7 @@ const BannerData = ({ banners }: { banners: BannerItemProps[] }) => {
         watchSlidesProgress
         className="mx-auto my-0 max-w-inner-wrapper"
       >
-        {banners.map((banner: BannerItemProps) => {
+        {banners.map((banner: BannerItem) => {
           return (
             <SwiperSlide key={`thumb-${banner.id}`} className="group w-auto max-w-1/2 xs:max-w-1/4">
               <span className="cursor-pointer uppercase font-medium py-4 flex items-center justify-center border-t-4 border-transparent group-[.swiper-slide-thumb-active]:text-primary group-[.swiper-slide-thumb-active]:border-primary transition-colors">

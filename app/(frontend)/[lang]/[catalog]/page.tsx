@@ -1,3 +1,5 @@
+import Breadcrumbs from '@/components/Header/Breadcrumbs'
+
 interface CatalogPageProps {
   lang: string
   catalog: string
@@ -6,10 +8,13 @@ interface CatalogPageProps {
 const CatalogPage = async ({ params }: { params: CatalogPageProps }) => {
   const { lang, catalog } = await params
   return (
-    <div className="bg-neutral-500">
-      {lang}
-      {catalog}
-    </div>
+    <Breadcrumbs
+      locale={lang}
+      crumbs={[
+        { title: 'Strona główna', url: `/${lang}` },
+        { title: catalog, url: `/${lang}/${catalog}` },
+      ]}
+    />
   )
 }
 

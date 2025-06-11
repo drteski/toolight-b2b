@@ -1,10 +1,6 @@
 import { cn } from '@/lib/utils'
 import { ReactElement } from 'react'
-
-interface FlagProps {
-  country: string
-  className?: string
-}
+import { FlagProps } from '@/lib/types'
 
 const Flags = (props: FlagProps) => {
   const { country, className } = props

@@ -161,6 +161,20 @@ export const Layout: GlobalConfig = {
                 },
               ],
             },
+            {
+              name: 'contactDetails',
+              label: 'Tłumaczenia tekstu kontaktów',
+              type: 'group',
+              fields: [
+                {
+                  name: 'workingHours',
+                  label: 'Tekst godziny pracy',
+                  type: 'text',
+                  localized: true,
+                  defaultValue: '---',
+                },
+              ],
+            },
           ],
         },
         {

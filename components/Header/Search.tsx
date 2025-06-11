@@ -22,9 +22,9 @@ const Search = ({ code }: { code: string }) => {
       <Drawer direction="top">
         <DrawerTrigger className="flex items-center justify-center p-2 xs:p-0">
           <SearchIcon className="flex xs:hidden text-foreground size-8" />
-          <div className="hidden xs:flex rounded-full cursor-pointer bg-neutral-100 pl-5 pr-10 py-3 items-center gap-2">
-            <SearchIcon className="text-neutral-500 size-6" />
-            <span className="text-neutral-500">{data.header.searchPlaceholder}</span>
+          <div className="hidden xs:flex rounded-md cursor-pointer text-neutral-900 hover:text-accent transition-colors  bg-background hover:bg-accent/10 px-5 py-3 items-center gap-2">
+            <SearchIcon className="size-6" />
+            <span className="">{data.header.searchPlaceholder}</span>
           </div>
         </DrawerTrigger>
         <DrawerContent className="h-screen lg:max-w-[calc(var(--spacing-inner-wrapper)_-_2_*_var(--spacing-padding))] mx-auto my-0">

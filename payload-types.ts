@@ -74,6 +74,7 @@ export interface Config {
     'energy-labels': EnergyLabel;
     rma: Rma;
     banners: Banner;
+    'main-menu': MainMenu;
     pos: Po;
     users: User;
     media: Media;
@@ -90,6 +91,7 @@ export interface Config {
     'energy-labels': EnergyLabelsSelect<false> | EnergyLabelsSelect<true>;
     rma: RmaSelect<false> | RmaSelect<true>;
     banners: BannersSelect<false> | BannersSelect<true>;
+    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     pos: PosSelect<false> | PosSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -102,7 +104,6 @@ export interface Config {
   };
   globals: {
     'top-bar': TopBar;
-    'main-menu': MainMenu;
     'popular-categories': PopularCategory;
     'about-us': AboutUs;
     contact: Contact;
@@ -111,7 +112,6 @@ export interface Config {
   };
   globalsSelect: {
     'top-bar': TopBarSelect<false> | TopBarSelect<true>;
-    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
     'popular-categories': PopularCategoriesSelect<false> | PopularCategoriesSelect<true>;
     'about-us': AboutUsSelect<false> | AboutUsSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
@@ -206,7 +206,7 @@ export interface Category {
    * Generowany automatycznie na podstawie tytułu
    */
   slug?: string | null;
-  relatedMainMenuLink: string;
+  relatedMainMenuLink: number | MainMenu;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -236,6 +236,18 @@ export interface Category {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu".
+ */
+export interface MainMenu {
+  id: number;
+  mainMenuLinkTitle?: string | null;
+  mainMenuLinkUrl?: string | null;
+  mainMenuOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -465,6 +477,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'banners';
         value: number | Banner;
+      } | null)
+    | ({
+        relationTo: 'main-menu';
+        value: number | MainMenu;
       } | null)
     | ({
         relationTo: 'pos';
@@ -739,6 +755,17 @@ export interface BannersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu_select".
+ */
+export interface MainMenuSelect<T extends boolean = true> {
+  mainMenuLinkTitle?: T;
+  mainMenuLinkUrl?: T;
+  mainMenuOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pos_select".
  */
 export interface PosSelect<T extends boolean = true> {
@@ -840,22 +867,6 @@ export interface TopBar {
       topBarLocaleText?: string | null;
     };
   };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "main-menu".
- */
-export interface MainMenu {
-  id: number;
-  mainMenu?:
-    | {
-        mainMenuLinkTitle?: string | null;
-        mainMenuLinkUrl?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -986,6 +997,9 @@ export interface Layout {
       contactRequiredText?: string | null;
       contactCta?: string | null;
     };
+    contactDetails?: {
+      workingHours?: string | null;
+    };
   };
   products?: {
     productHeading?: string | null;
@@ -1026,22 +1040,6 @@ export interface TopBarSelect<T extends boolean = true> {
           | {
               topBarLocaleText?: T;
             };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "main-menu_select".
- */
-export interface MainMenuSelect<T extends boolean = true> {
-  mainMenu?:
-    | T
-    | {
-        mainMenuLinkTitle?: T;
-        mainMenuLinkUrl?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1169,6 +1167,11 @@ export interface LayoutSelect<T extends boolean = true> {
               contactText?: T;
               contactRequiredText?: T;
               contactCta?: T;
+            };
+        contactDetails?:
+          | T
+          | {
+              workingHours?: T;
             };
       };
   products?:

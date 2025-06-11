@@ -14,21 +14,21 @@ import Link from 'next/link'
 import { locales } from '@/middleware'
 import { XIcon } from 'lucide-react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
-import * as React from 'react'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
+import { CurrentLocale, Locale } from '@/lib/types'
 
-const TopBar = ({ locale }: { locale: string }) => {
+const TopBar = ({ locale }: Locale) => {
   const { label, code } = locales.filter(
-    (currentLocale: { label: string; code: string }) => currentLocale.code === locale,
+    (currentLocale: CurrentLocale) => currentLocale.code === locale,
   )[0]
   const { data, isLoading } = useGetPayloadData('top-bar', true, locale)
-
   if (isLoading) return <Loading />
+
   return (
     <div className="bg-neutral-100">
       <div className="flex justify-between items-center my-0 mx-auto max-w-inner-wrapper px-padding py-2">
-        <span className="text-neutral-500">{data?.topBar.topBarText}</span>
+        <span className="text-neutral-500">{data.topBar.topBarText}</span>
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -41,7 +41,7 @@ const TopBar = ({ locale }: { locale: string }) => {
           </SheetTrigger>
           <SheetContent className="w-screen sm:w-[400px]">
             <SheetHeader>
-              <SheetTitle>{data?.topBar.languageSelect.topBarLocaleText}</SheetTitle>
+              <SheetTitle>{data.topBar.languageSelect.topBarLocaleText}</SheetTitle>
               <SheetDescription className="flex flex-col gap-1.5 py-10">
                 {locales.map((locale) => {
                   if (locale.code === code)

@@ -10,18 +10,9 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion'
 import Image from 'next/image'
+import { AboutUsItem, Locale } from '@/lib/types'
 
-interface AboutUsItem {
-  title: string
-  description: string
-  icon: {
-    url: string
-    width: number
-    height: number
-  }
-}
-
-const AboutUsData = ({ locale }: { locale: string }) => {
+const AboutUsData = ({ locale }: Locale) => {
   const { data, isLoading } = useGetPayloadData('about-us', true, locale)
   if (isLoading) return <Loading />
   return (
@@ -87,9 +78,9 @@ const AboutUs = () => {
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
   return (
-    <div id="about-us" className="py-padding">
+    <div id="about-us" className="py-padding-vertical scroll-m-offset-[1000px]">
       <div className="max-w-inner-wrapper mx-auto my-0 px-padding">
-        <h2 className="uppercase text-2xl xs:text-3xl font-bold">{data.sections.aboutUs}</h2>
+        <h2 className="uppercase text-3xl xs:text-4xl font-bold">{data.sections.aboutUs}</h2>
       </div>
       <AboutUsData locale={code} />
     </div>

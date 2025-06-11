@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
 const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) => {
-  const getCountry = async () => {
+  const getPayloadData = async () => {
     return await axios
       .get(`/api/${globals ? 'globals' : ''}/${endpoint}/?depth=3&draft=false&locale=${locale}`, {
         // credentials: 'include',
@@ -20,7 +20,7 @@ const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) =
   }
   const { data, error, isError, isLoading } = useQuery({
     queryKey: [`${endpoint}`, locale],
-    queryFn: getCountry,
+    queryFn: getPayloadData,
   })
   return { data, error, isError, isLoading }
 }

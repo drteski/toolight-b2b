@@ -12,20 +12,9 @@ import {
 } from '@/components/ui/carousel'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Category, Locale } from '@/lib/types'
 
-interface Category {
-  title: string
-  slug: string
-  sizes: {
-    thumbnail: {
-      url: string
-      width: number
-      height: number
-    }
-  }
-}
-
-const PopularCategoriesData = ({ locale }: { locale: string }) => {
+const PopularCategoriesData = ({ locale }: Locale) => {
   const { data, isLoading } = useGetPayloadData('categories', false, locale)
   if (isLoading) return <Loading />
   return (
@@ -39,7 +28,7 @@ const PopularCategoriesData = ({ locale }: { locale: string }) => {
             >
               <Link
                 className="flex flex-col gap-8 border border-neutral-100 rounded-xl p-8! hover:border-accent transition-colors"
-                href={`/categories/${item.slug}`}
+                href={`/${locale}/${item.relatedMainMenuLink.mainMenuLinkUrl}/${item.slug}`}
               >
                 <Image
                   src={item.sizes.thumbnail.url}
@@ -64,9 +53,9 @@ const PopularCategories = ({}) => {
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
   return (
-    <div className="py-padding overflow-hidden">
+    <div className="py-padding-vertical overflow-hidden">
       <div className="max-w-inner-wrapper mx-auto my-0 px-padding">
-        <h2 className="uppercase text-2xl xs:text-3xl font-bold">
+        <h2 className="uppercase text-3xl xs:text-4xl font-bold">
           {data.sections.popularCategories}
         </h2>
       </div>
