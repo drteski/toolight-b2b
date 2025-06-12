@@ -1,19 +1,16 @@
-export function payloadParamsGraphQLBuilder(filters: { [key: string]: string[] } | null) {
+const payloadParamsGraphQLBuilder = (filters: { [key: string]: string[] } | null) => {
   if (filters === null) return {}
 
-  const and: any[] = []
+  const AND: any[] = []
 
-  const filterEntries = Object.entries(filters)
-  filterEntries.forEach(([paramName, values]) => {
-    and.push({
-      parameters: {
-        elemMatch: {
-          name: { equals: paramName },
-          value: { in: values },
-        },
-      },
+  Object.entries(filters).forEach(([paramName, values]) => {
+    AND.push({
+      // parameters__name: { equals: paramName },
+      parameters__value: { in: values },
     })
   })
 
-  return { and }
+  return { AND }
 }
+
+export default payloadParamsGraphQLBuilder

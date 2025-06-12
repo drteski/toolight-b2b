@@ -32,7 +32,14 @@ export type ProductDataProps = {
   layout: {
     productHeading: string
     productCount: string
+    parameters: [{ name: string }]
   }
+}
+
+export type FilterProps = {
+  locale: string
+  filters: [{ name: string }]
+  category?: string | undefined
 }
 
 // HOOKS

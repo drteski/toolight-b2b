@@ -6,16 +6,19 @@ import { Button } from '@/components/ui/button'
 import 'swiper/css'
 import FilterSelectField from '@/components/Main/FilterSelectField'
 import { getFilterMapping } from '@/lib/filterMapping'
+import Loading from '@/app/(frontend)/[lang]/loading'
+import useGetProductParameters from '@/hooks/useGetProductParameters'
+import { FilterProps } from '@/lib/types'
 
-const Filters = ({ products, isCategory, filters }) => {
+const Filters = ({ locale, filters, category = undefined }: FilterProps) => {
+  const { data, isLoading } = useGetProductParameters(locale, category)
+  if (isLoading) return <Loading />
   const filterNames = filters.map((filter: { name: string }) => filter.name)
 
-  const productParameters = products.map((product: { parameters: [] }) => product.parameters)
-  const filtersData = getFilterMapping(filterNames, productParameters)
-
+  const filtersData: { name: string; options: string[] }[] = getFilterMapping(filterNames, data)
   return (
     <div className="flex flex-col">
-      {isCategory && (
+      {!category && (
         <div className="py-padding">
           <Swiper
             spaceBetween={16}
@@ -43,8 +46,8 @@ const Filters = ({ products, isCategory, filters }) => {
         </div>
       )}
       <div className="grid grid-cols-5 gap-4">
-        {filtersData.map((filter: { name: string; values: string[] }) => (
-          <FilterSelectField data={filter} />
+        {filtersData.map((filter, index: number) => (
+          <FilterSelectField key={index} data={filter} />
         ))}
       </div>
     </div>

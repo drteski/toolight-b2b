@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import useQueryParamsObject from '@/hooks/useQueryParamsObject'
 import useSetQueryParam from '@/hooks/useSetQueryParam'
 
-const FilterSelectField = ({ data }: { name: string; options: string[] }) => {
+const FilterSelectField = ({ data }: { data: { name: string; options: string[] } }) => {
   const { name, options } = data
   const queryParams = useQueryParamsObject()
   const setQueryParam = useSetQueryParam()
@@ -19,19 +19,20 @@ const FilterSelectField = ({ data }: { name: string; options: string[] }) => {
   useEffect(() => {
     if (queryParams) {
       const valuesFromURL = queryParams[name] || []
-    return setSelectedValues(valuesFromURL)
+      return setSelectedValues(valuesFromURL)
     }
     return setSelectedValues([])
   }, [queryParams, name])
 
   const toggleValue = (value: string) => {
     setSelectedValues((prev) => {
-      const newValues = prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-
-      setQueryParam(name, newValues)
-      return newValues
+      return prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     })
   }
+
+  useEffect(() => {
+    setQueryParam(name, selectedValues)
+  }, [selectedValues, setQueryParam, name])
 
   const [open, setOpen] = useState(false)
 

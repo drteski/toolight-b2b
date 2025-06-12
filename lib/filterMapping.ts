@@ -1,23 +1,14 @@
-export const getFilterMapping = (
-  filterNames: string[],
-  productParameters: [[{ name: string; value: string }]],
-) => {
-  const filterMap = new Map()
+export const getFilterMapping = (filterNames: string[], data: Record<string, string[]> = {}) => {
+  const filterMap = new Map<string, Set<string>>()
 
   filterNames.forEach((filterName: string) => {
-    filterMap.set(filterName, new Set())
+    filterMap.set(filterName, new Set(data[filterName] || []))
   })
 
-  productParameters.forEach((paramList: [{ name: string; value: string }]) => {
-    paramList.forEach((param: { name: string; value: string }) => {
-      if (filterMap.has(param.name)) {
-        filterMap.get(param.name).add(param.value)
-      }
-    })
-  })
-
-  return filterNames.map((filterName: string): { name: string; options: string[] } => ({
-    name: filterName,
-    options: Array.from(filterMap.get(filterName)),
-  }))
+  return filterNames
+    .map((filterName: string): { name: string; options: string[] } => ({
+      name: filterName,
+      options: Array.from(filterMap.get(filterName) ?? []),
+    }))
+    .filter((filter) => filter.options.length > 0)
 }

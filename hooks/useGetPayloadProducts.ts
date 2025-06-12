@@ -2,9 +2,9 @@
 
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { payloadParamsGraphQLBuilder } from '@/lib/payloadParamsQueryBulider'
+import payloadParamsGraphQLBuilder from '@/lib/payloadParamsQueryBulider'
 
-const useGetPayloadProducts = (
+const useGetPayloadProductsGraphQL = (
   locale: string,
   limit: string | null = '24',
   page: string | null = '1',
@@ -14,8 +14,8 @@ const useGetPayloadProducts = (
   const where = payloadParamsGraphQLBuilder(query)
 
   if (category !== '') {
-    where.and = where.and || []
-    where.and.push({
+    where.AND = where.AND || []
+    where.AND.push({
       category: {
         slug: { equals: category },
       },
@@ -23,30 +23,30 @@ const useGetPayloadProducts = (
   }
 
   const getPayloadProducts = async () => {
+    // Uwaga: locale bez cudzysłowów — enum!
     const graphqlQuery = {
       query: `
-    query GetProducts {
-      Products(locale: "${locale}", limit: ${limit}, page: ${page}, where: ${JSON.stringify(where).replace(/"([^"]+)":/g, '$1:')}) {
-        docs {
-          id
-          title
-          parameters {
-            name
-            value
+        query GetProducts {
+          Products(locale: ${locale}, limit: ${limit}, page: ${page}, where: ${JSON.stringify(where).replace(/"([^"]+)":/g, '$1:')}) {
+            docs {
+              id
+              title
+              parameters {
+                name
+                value
+              }
+              slug
+              mainImage {
+                url
+              }
+            }
+            totalDocs
+            limit
+            page
+            totalPages
           }
         }
-        totalDocs
-        limit
-        page
-        totalPages
-      }
-    }
-        `,
-      variables: {
-        locale,
-        limit,
-        page,
-      },
+      `,
     }
 
     return await axios
@@ -59,6 +59,7 @@ const useGetPayloadProducts = (
       .then((res) => {
         const graphqlResponse = res.data
 
+        // Obsługa błędów GraphQL
         if (graphqlResponse.errors) {
           throw new Error(graphqlResponse.errors[0].message)
         }
@@ -74,11 +75,11 @@ const useGetPayloadProducts = (
   }
 
   const { data, error, isError, isLoading } = useQuery({
-    queryKey: ['products', locale, limit, page, category, query],
+    queryKey: ['productsGraphQL', locale, limit, page, category, query],
     queryFn: getPayloadProducts,
   })
 
   return { data, error, isError, isLoading }
 }
 
-export default useGetPayloadProducts
+export default useGetPayloadProductsGraphQL

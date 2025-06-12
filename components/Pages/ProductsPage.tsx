@@ -18,18 +18,24 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
   const query = useQueryParamsObject()
 
   const { data, isLoading } = useGetPayloadProducts(locale, limit, page, '', query)
-  console.log(data)
   if (isLoading) return <Loading />
+
   return (
     <>
-      <PageHeading
-        title={layout.productHeading}
-        countText={layout.productCount}
-        count={data.totalDocs}
-      />
-      <Filters products={data.docs} isCategory={true} filters={layout.parameters} />
-      <ProductListing />
-      <ListingNavigation />
+      {isLoading ? (
+        <span>ładowanie</span>
+      ) : (
+        <>
+          <PageHeading
+            title={layout.productHeading}
+            countText={layout.productCount}
+            count={data.totalDocs}
+          />
+          <Filters locale={locale} filters={layout.parameters} />
+          <ProductListing />
+          <ListingNavigation />
+        </>
+      )}
     </>
   )
 }
