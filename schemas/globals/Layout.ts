@@ -189,6 +189,18 @@ export const Layout: GlobalConfig = {
           label: 'Produkty',
           fields: [
             {
+              name: 'parameters',
+              type: 'array',
+              label: 'Filtry parametrów technicznych',
+              localized: true,
+              fields: [
+                {
+                  type: 'row',
+                  fields: [{ name: 'name', label: 'Nazwa', type: 'text' }],
+                },
+              ],
+            },
+            {
               name: 'productHeading',
               label: 'Tekst wszystkie produkty',
               type: 'text',

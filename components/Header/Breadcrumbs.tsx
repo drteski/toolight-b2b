@@ -1,56 +1,100 @@
 'use client'
-import React from 'react'
+import React, { Fragment } from 'react'
 import useGetPayloadData from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { BreadcrumbProps, BreadcrumbsProps, MainMenuItem } from '@/lib/types'
+import {
+  BreadcrumbCategoryProps,
+  BreadcrumbProductProps,
+  BreadcrumbsProps,
+  MainMenuItem,
+} from '@/lib/types'
 
-const BreadcrumbsCategoryData = ({ locale, crumb }: BreadcrumbProps) => {
-  const { data, isLoading } = useGetPayloadData('categories', false, locale)
-  if (isLoading) return <Loading />
-  console.log(data.docs,crumb)
-  return <>{data.docs.filter((doc) => doc.slug === crumb)[0].title}</>
+const BreadcrumbsCategoryData = ({
+  locale,
+  category,
+  lastCrumbs,
+  last,
+}: BreadcrumbCategoryProps) => {
+  return (
+    <>
+      {last ? (
+        <span>{category.title}</span>
+      ) : (
+        <>
+          <Link
+            className="hover:text-neutral-400 transition-colors"
+            href={`/${locale}/${lastCrumbs[0]}/${category.crumb}`}
+          >
+            {category.title}
+          </Link>
+          <ChevronRight className="size-4" />
+        </>
+      )}
+    </>
+  )
 }
-const BreadcrumbsProductData = ({ locale, crumb }: BreadcrumbProps) => {
+const BreadcrumbsProductData = ({ locale, lastCrumbs, product }: BreadcrumbProductProps) => {
   return <>asdf</>
 }
 
 const BreadcrumbsData = ({ locale, crumbs }: BreadcrumbsProps) => {
   const { data, isLoading } = useGetPayloadData('main-menu', false, locale)
   if (isLoading) return <Loading />
-  if(crumbs.length === 1)  return (
+  const firstCrumb = crumbs[0]
+  const firstDoc = data.docs.find((doc: MainMenuItem) => doc.mainMenuLinkUrl === firstCrumb)
+  const firstTitle = firstDoc?.mainMenuLinkTitle ?? firstCrumb
+
+  return (
     <>
-      {[crumbs[0]].map((crumb: string, index: number) => {
-        const title: string = data.docs.filter(
-          (doc: MainMenuItem) => doc.mainMenuLinkUrl === crumb,
-        )[0].mainMenuLinkTitle
-        return (
-          <>
-            <span key={crumb}>{title}</span>
-            {index !== crumbs.length - 1 && <ChevronRight className="size-4" />}
-          </>
-        )
+      {crumbs.map((crumb: string, index: number) => {
+        if (index === 0)
+          return (
+            <Fragment key={`${index}${crumb}`}>
+              {crumbs.length === 1 ? (
+                <>
+                  <span key={`${index}${crumb}`}>{firstTitle}</span>
+                  {index !== crumbs.length - 1 && <ChevronRight className="size-4" />}
+                </>
+              ) : (
+                <>
+                  <Link
+                    className="hover:text-neutral-400 transition-colors"
+                    href={`/${locale}/${crumb}`}
+                    key={`${index}${crumb}`}
+                  >
+                    {firstTitle}
+                  </Link>
+                  {index !== crumbs.length - 1 && <ChevronRight className="size-4" />}
+                </>
+              )}
+            </Fragment>
+          )
+
+        if (index === 1)
+          return (
+            <BreadcrumbsCategoryData
+              key={`${index}${crumb}`}
+              locale={locale}
+              lastCrumbs={crumbs}
+              category={{ title: 'dupa', crumb: 'dupa' }}
+              last={index === crumbs.length - 1}
+            />
+          )
+        if (index === 2)
+          return (
+            <BreadcrumbsProductData
+              lastCrumbs={crumbs}
+              locale={locale}
+              key={`${index}${crumb}`}
+              product={{ title: 'dupa', crumb: 'dupa' }}
+            />
+          )
+        return <Fragment key="nieistnieje"></Fragment>
       })}
     </>
   )
-    return (
-      <>
-        {[crumbs[0]].map((crumb: string, index: number) => {
-          const title: string = data.docs.filter(
-            (doc: MainMenuItem) => doc.mainMenuLinkUrl === crumb,
-          )[0].mainMenuLinkTitle
-          return (
-            <>
-              <Link className="hover:text-neutral-400 transition-colors"  href={`/${locale}/${crumb}`} key={crumb}>{title}</Link>
-              {index !== crumbs.length - 1 && <ChevronRight className="size-4" />}
-            </>
-          )
-        })}
-        {crumbs.length >= 2 && (<><BreadcrumbsCategoryData locale={locale} crumb={crumbs[1]} /><ChevronRight className="size-4" />{<>{crumbs.length >= 3 && <BreadcrumbsProductData locale={locale} crumb={crumbs[2]} />}</>}</>)}
-
-      </>
-    ) 
 }
 
 const Breadcrumbs = ({ crumbs, locale }: BreadcrumbsProps) => {

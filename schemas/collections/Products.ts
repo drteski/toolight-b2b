@@ -198,6 +198,17 @@ export const Products: CollectionConfig = {
         }
         return data
       },
+      ({ data, req }) => {
+        const isDuplicate =
+          req.pathname.split('/').filter(Boolean)[
+            req.pathname.split('/').filter(Boolean).length - 1
+          ] === 'duplicate'
+        if (req && isDuplicate && data.title) {
+          data.title = `Kopia ${data.title}`
+        }
+
+        return data
+      },
     ],
   },
 }

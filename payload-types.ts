@@ -1003,6 +1003,12 @@ export interface Layout {
     };
   };
   products?: {
+    parameters?:
+      | {
+          name?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     productHeading?: string | null;
     productCount?: string | null;
     productListingView?: string | null;
@@ -1179,6 +1185,12 @@ export interface LayoutSelect<T extends boolean = true> {
   products?:
     | T
     | {
+        parameters?:
+          | T
+          | {
+              name?: T;
+              id?: T;
+            };
         productHeading?: T;
         productCount?: T;
         productListingView?: T;

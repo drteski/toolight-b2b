@@ -27,6 +27,14 @@ export type ProductPageProps = {
   }
 }
 
+export type ProductDataProps = {
+  locale: string
+  layout: {
+    productHeading: string
+    productCount: string
+  }
+}
+
 // HOOKS
 
 export type WindowSize = {
@@ -64,15 +72,34 @@ export type ContactDataProps = {
   layout: Layout
 }
 
+export type PageHeadingProps = {
+  title: string
+  countText: string
+  count: number
+}
+
 export type BreadcrumbsProps = {
   locale: string
   crumbs: string[]
   crumb?: string
 }
 
-export type BreadcrumbProps = {
+export type BreadcrumbProductProps = {
   locale: string
-  crumb: string
+  lastCrumbs: string[]
+  product: {
+    title: string
+    crumb: string
+  }
+}
+export type BreadcrumbCategoryProps = {
+  locale: string
+  lastCrumbs: string[]
+  category: {
+    title: string
+    crumb: string
+  }
+  last: boolean
 }
 
 // PAYLOAD DATA
