@@ -153,6 +153,7 @@ export interface UserAuthOperations {
  */
 export interface Product {
   id: number;
+  subiektId?: number | null;
   title: string;
   category?: (number | null) | Category;
   active?: boolean | null;
@@ -571,6 +572,7 @@ export interface PayloadMigration {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  subiektId?: T;
   title?: T;
   category?: T;
   active?: T;

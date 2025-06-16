@@ -15,6 +15,11 @@ export const Products: CollectionConfig = {
   },
   fields: [
     {
+      type: 'number', name: 'subiektId', admin: {
+        hidden: true,
+      },
+    },
+    {
       type: 'row',
       fields: [
         {
@@ -194,7 +199,7 @@ export const Products: CollectionConfig = {
   ],
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['mainImage', 'title', 'sku', 'ean'],
+    defaultColumns: ['active', 'mainImage', 'title', 'sku', 'ean'],
   },
   hooks: {
     beforeChange: [
@@ -208,8 +213,8 @@ export const Products: CollectionConfig = {
       ({ data, req }) => {
         const isDuplicate =
           req.pathname.split('/').filter(Boolean)[
-            req.pathname.split('/').filter(Boolean).length - 1
-          ] === 'duplicate'
+          req.pathname.split('/').filter(Boolean).length - 1
+            ] === 'duplicate'
         if (req && isDuplicate && data.title) {
           data.title = `Kopia ${data.title}`
         }
