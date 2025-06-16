@@ -37,6 +37,12 @@ export const Products: CollectionConfig = {
           },
         },
         {
+          name: 'active',
+          type: 'checkbox',
+          label: 'Aktywny',
+          admin: { style: { alignSelf: 'end', justifyContent: 'center', paddingBottom: 6 } },
+        },
+        {
           name: 'new',
           type: 'checkbox',
           label: 'Nowość',
@@ -82,6 +88,7 @@ export const Products: CollectionConfig = {
         beforeChange: [generateSlug('title')],
       },
     },
+    { name: 'b2bUrl', type: 'text', label: 'Link B2B', admin: { position: 'sidebar' } },
     {
       name: 'attachments',
       type: 'group',

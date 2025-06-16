@@ -19,6 +19,7 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
 
   const { data, isLoading } = useGetPayloadProducts(locale, limit, page, '', query)
   if (isLoading) return <Loading />
+  console.log(data)
 
   return (
     <>

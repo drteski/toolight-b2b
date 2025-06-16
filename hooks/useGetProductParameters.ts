@@ -112,7 +112,6 @@ const useGetProductParameters = (locale: string, categorySlug?: string) => {
       })
       .then((res) => {
         const graphqlResponse = res.data
-        console.log(graphqlResponse)
 
         if (graphqlResponse.errors) {
           throw new Error(graphqlResponse.errors[0].message)

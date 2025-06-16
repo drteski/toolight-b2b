@@ -6,7 +6,7 @@ const payloadParamsGraphQLBuilder = (filters: { [key: string]: string[] } | null
 
   Object.entries(filters).forEach(([paramName, values]) => {
     OR.push({
-      // parameters__name: { equals: paramName },
+      parameters__name: { equals: paramName },
       parameters__value: { in: values },
     })
   })
