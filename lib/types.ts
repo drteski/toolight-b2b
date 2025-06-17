@@ -1,8 +1,9 @@
 import React from 'react'
+import { locales } from '@/middleware'
 
 export type CurrentLocale = { label: string; code: string }
 export type Locale = { locale: string }
-
+export type LocaleCode = (typeof locales)[number]['code']
 export type SubPageProps = {
   children: React.ReactNode
   params: {

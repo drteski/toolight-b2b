@@ -20,7 +20,6 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
   const { data, isLoading } = useGetPayloadProducts(locale, limit, page, '', query)
   if (isLoading) return <Loading />
   console.log(data)
-
   return (
     <>
       {isLoading ? (
@@ -33,7 +32,7 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
             count={data.totalDocs}
           />
           <Filters locale={locale} filters={layout.parameters} />
-          <ProductListing />
+          <ProductListing products={data.docs} layout={layout} />
           <ListingNavigation />
         </>
       )}
@@ -44,11 +43,7 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
 const ProductsPage = ({ locale }: Locale) => {
   const { data, isLoading } = useGetPayloadData('layout', true, locale)
   if (isLoading) return <Loading />
-  return (
-    <div className="max-w-inner-wrapper mx-auto my-0 px-padding">
-      <ProductsData locale={locale} layout={data.products} />
-    </div>
-  )
+  return <ProductsData locale={locale} layout={data.products} />
 }
 
 export default ProductsPage

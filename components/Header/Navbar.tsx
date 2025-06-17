@@ -20,7 +20,7 @@ const Navbar = ({ locale }: Locale) => {
   )
   return (
     <div
-      className={`border-b-1 ${isSticky ? 'border-white shadow-2xl shadow-neutral-500/20' : 'border-neutral-200'} bg-background border-b sticky top-0 z-10 transition-all`}
+      className={`border-b-1 ${isSticky ? 'border-neutral-200 shadow-2xl shadow-neutral-500/20' : 'border-neutral-200'} bg-background border-b sticky top-0 z-10 transition-all`}
     >
       <div
         className={`grid xs:hidden my-0 mx-auto max-w-inner-wrapper px-padding ${isSticky ? 'py-1' : 'py-4'} grid-cols-[1fr_auto_auto] gap-2 items-center justify-between transition-all`}

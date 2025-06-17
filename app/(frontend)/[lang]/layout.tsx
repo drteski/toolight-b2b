@@ -16,11 +16,11 @@ const RootLayout = async ({
 
   return (
     <html lang={lang}>
-      <body className="antialiased"> 
+      <body className="antialiased">
         <Providers>
           <TopBar locale={lang} />
           <Navbar locale={lang} />
-          <main>{children}</main>
+          <main className="relative">{children}</main>
           <Footer locale={lang} />
         </Providers>
       </body>

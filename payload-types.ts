@@ -78,7 +78,6 @@ export interface Config {
     pos: Po;
     users: User;
     media: Media;
-    'task-queue': TaskQueue;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -96,7 +95,6 @@ export interface Config {
     pos: PosSelect<false> | PosSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'task-queue': TaskQueueSelect<false> | TaskQueueSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -450,28 +448,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "task-queue".
- */
-export interface TaskQueue {
-  id: number;
-  name?: string | null;
-  logs?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  status?: string | null;
-  startedAt?: string | null;
-  finishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -520,10 +496,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'task-queue';
-        value: number | TaskQueue;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -856,19 +828,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "task-queue_select".
- */
-export interface TaskQueueSelect<T extends boolean = true> {
-  name?: T;
-  logs?: T;
-  status?: T;
-  startedAt?: T;
-  finishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

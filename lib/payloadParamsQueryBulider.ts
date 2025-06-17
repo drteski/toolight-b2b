@@ -5,13 +5,16 @@ const payloadParamsGraphQLBuilder = (filters: { [key: string]: string[] } | null
   const AND: any[] = []
 
   Object.entries(filters).forEach(([paramName, values]) => {
+    if (paramName === 'limit' || paramName === 'page') return
     OR.push({
       parameters__name: { equals: paramName },
       parameters__value: { in: values },
     })
   })
 
-  return { OR, AND }
+  AND.push({ OR })
+
+  return { AND }
 }
 
 export default payloadParamsGraphQLBuilder

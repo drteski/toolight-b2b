@@ -9,7 +9,7 @@ export const uploadProducts = async () => {
     await payload.init({ config: payloadConfig })
 
     if (!process.env.PRODUCT_FEED_URL) {
-      throw new Error('Brak URL feedu')
+      return Error('Brak URL feedu')
     }
 
     const res = await axios.get(process.env.PRODUCT_FEED_URL)
@@ -27,22 +27,8 @@ export const uploadProducts = async () => {
 
       for await (const product of products) {
         current++
-        const {
-          id,
-          b2b,
-          sku,
-          ean,
-          stock,
-          b2bUrl,
-          subiektTitle,
-          productGroup,
-          titles,
-          variantNames,
-          descriptions,
-          producer,
-          images,
-          parameters,
-        } = product
+        const { id, b2b, sku, ean, b2bUrl, subiektTitle, descriptions, images, parameters } =
+          product
 
         const slug = slugify(subiektTitle, {
           lower: true,
@@ -67,13 +53,38 @@ export const uploadProducts = async () => {
           }
 
           if (existingProduct.docs.length <= 0) {
+            const uploads: { image: number; featured: boolean }[] = []
+            let i: number = 1
+            for await (const image of images) {
+              const res = await axios.get(image, { responseType: 'arraybuffer' })
+              const data: Buffer<ArrayBufferLike> = Buffer.from(res.data, 'binary')
+              const size: number = res.headers['content-length']
+              const mimetype: string = res.headers['content-type']
+              const name: string = `${subiektTitle} ${i}`
+              const uploadedImage = await payload.create({
+                collection: 'media',
+                data: {},
+                file: {
+                  data,
+                  name,
+                  mimetype,
+                  size,
+                },
+              })
+              uploads.push({ image: uploadedImage.id, featured: i === 1 })
+              i++
+            }
+
             await payload.create({
               collection: 'products',
               data: {
                 ...commonData,
                 description: descriptions[locale.code],
                 parameters: parameters[locale.code],
+                gallery: uploads,
               },
+              // @ts-ignore
+              locale: locale.code,
             })
             console.log(
               `🆕 [${current}/${total}] Utworzono produkt: ${subiektTitle} (${locale.code})`,
@@ -83,11 +94,12 @@ export const uploadProducts = async () => {
               collection: 'products',
               where: { slug: { equals: slug } },
               data: {
-                active: b2b,
-                sku,
-                ean,
-                b2bUrl,
+                ...commonData,
+                description: descriptions[locale.code],
+                parameters: parameters[locale.code],
               },
+              // @ts-ignore
+              locale: locale.code,
             })
             console.log(
               `♻️  [${current}/${total}] Zaktualizowano produkt: ${subiektTitle} (${locale.code})`,
@@ -96,7 +108,7 @@ export const uploadProducts = async () => {
         } catch (innerError) {
           console.error(
             `❌ [${current}/${total}] Błąd przy produkcie ${subiektTitle} (${locale.code}):`,
-            innerError.message,
+            innerError,
           )
         }
       }

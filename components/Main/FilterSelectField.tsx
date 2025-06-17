@@ -38,27 +38,31 @@ const FilterSelectField = ({ data }: { data: { name: string; options: string[] }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger className="bg-white" asChild>
         <Button
-          variant="outline"
+          // variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[200px] justify-between bg-white text-foreground border border-neutral-200 hover:bg-neutral-100 cursor-pointer"
         >
           {selectedValues.length > 0 ? `${selectedValues.length} wybrano` : name}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[200px] p-0 ">
         <Command>
           <CommandGroup>
             {options.map((option: string) => (
-              <CommandItem key={option} onSelect={() => toggleValue(option)}>
+              <CommandItem
+                className="hover:bg-neutral-200 hover:text-foreground"
+                key={option}
+                onSelect={() => toggleValue(option)}
+              >
                 <div
                   className={cn(
-                    'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                    'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-foreground',
                     selectedValues.includes(option)
-                      ? 'bg-primary text-primary-foreground'
+                      ? 'bg-foreground text-neutral-200'
                       : 'opacity-50 [&_svg]:invisible',
                   )}
                 >

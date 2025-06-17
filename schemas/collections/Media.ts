@@ -8,14 +8,14 @@ export const Media: CollectionConfig = {
   },
   access: {
     read: () => true,
-    update: () => false,
+    update: () => true,
     create: () => true,
-    delete: () => false,
+    delete: () => true,
   },
   fields: [],
   upload: {
     staticDir: 'media/files',
     adminThumbnail: 'thumbnail',
-    mimeTypes: ['image/svg', 'image/png'],
+    mimeTypes: ['image/*'],
   },
 }

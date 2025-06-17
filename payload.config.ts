@@ -27,7 +27,6 @@ import { EnergyLabels } from '@/schemas/collections/EnergyLabels'
 import { Manuals } from '@/schemas/collections/Manuals'
 import { ProductCards } from '@/schemas/collections/ProductCards'
 import { locales } from '@/middleware'
-import TaskQueue from '@/schemas/collections/TaskQueue'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +34,9 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
-
+    components: {
+      beforeDashboard: ['/schemas/components/ProductSync'],
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -52,58 +53,11 @@ export default buildConfig({
     PointOfSale,
     Users,
     Media,
-    TaskQueue,
   ],
   globals: [TopBar, PopularCategories, AboutUs, Contact, Footer, Layout],
-
-  // jobs: {
-  //   tasks: [
-  //     {
-  //       slug: 'products-sync',
-  //       label: 'Synchronizacja produktów',
-  //       inputSchema: [],
-  //       outputSchema: [],
-  //       handler: async ({ req }) => {
-  //         const category = await req.payload.create({
-  //           collection: 'categories',
-  //           req,
-  //           data: {
-  //             slug: 'test-testtest',
-  //             relatedMainMenuLink: 1,
-  //             title: 'test',
-  //           },
-  //         })
-  //         return { output: { category } }
-  //       },
-  //     } as TaskConfig<'products-sync'>,
-  //   ],
-  //   autoRun: [
-  //     // {
-  //     //   cron: '* */4 * * *',
-  //     //   queue: 'products-sync',
-  //     //   limit: 10,
-  //     // },
-  //     {
-  //       cron: '*/1 * * * *',
-  //       queue: 'products-sync',
-  //     },
-  //   ],
-  //   shouldAutoRun: async () => {
-  //     return true
-  //   },
-  //   jobsCollectionOverrides: ({ defaultJobsCollection }) => {
-  //     if (!defaultJobsCollection.admin) {
-  //       defaultJobsCollection.admin = {}
-  //     }
-  //
-  //     defaultJobsCollection.admin.hidden = false
-  //     return defaultJobsCollection
-  //   },
-  // },
   i18n: {
     supportedLanguages: { pl },
   },
-
   localization: {
     locales,
     defaultLocale: 'pl',
