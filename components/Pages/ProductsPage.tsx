@@ -11,15 +11,12 @@ import ListingNavigation from '@/components/Main/ListingNavigation'
 import { useSearchParams } from 'next/navigation'
 import useQueryParamsObject from '@/hooks/useQueryParamsObject'
 
-const ProductsData = ({ locale, layout }: ProductDataProps) => {
+export const ProductsData = ({ locale, layout, category }: ProductDataProps) => {
   const searchParams = useSearchParams()
-  const limit = searchParams.get('limit')
   const page = searchParams.get('page')
   const query = useQueryParamsObject()
-
-  const { data, isLoading } = useGetPayloadProducts(locale, limit, page, '', query)
+  const { data, isLoading } = useGetPayloadProducts(locale, page, category, query)
   if (isLoading) return <Loading />
-  console.log(data)
   return (
     <>
       {isLoading ? (
@@ -31,19 +28,27 @@ const ProductsData = ({ locale, layout }: ProductDataProps) => {
             countText={layout.productCount}
             count={data.totalDocs}
           />
-          <Filters locale={locale} filters={layout.parameters} />
+          <Filters locale={locale} filters={layout.parameters} category={category} />
           <ProductListing products={data.docs} layout={layout} />
-          <ListingNavigation />
+          <ListingNavigation
+            nav={{
+              totalPages: data.totalPages,
+              page: data.page,
+              nextPage: data.nextPage,
+              prevPage: data.prevPage,
+            }}
+            layout={layout}
+          />
         </>
       )}
     </>
   )
 }
 
-const ProductsPage = ({ locale }: Locale) => {
+const ProductsPage = ({ locale, category }: Locale) => {
   const { data, isLoading } = useGetPayloadData('layout', true, locale)
   if (isLoading) return <Loading />
-  return <ProductsData locale={locale} layout={data.products} />
+  return <ProductsData locale={locale} layout={data.products} category={category} />
 }
 
 export default ProductsPage

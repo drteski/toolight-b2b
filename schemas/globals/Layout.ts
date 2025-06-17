@@ -270,6 +270,40 @@ export const Layout: GlobalConfig = {
               localized: true,
               defaultValue: '---',
             },
+            {
+              name: 'listing',
+              type: 'group',
+              fields: [
+                {
+                  name: 'nextPage',
+                  label: 'Następna strona',
+                  type: 'text',
+                  localized: true,
+                  defaultValue: '---',
+                },
+                {
+                  name: 'prevPage',
+                  label: 'Poprzednia strona',
+                  type: 'text',
+                  localized: true,
+                  defaultValue: '---',
+                },
+                {
+                  name: 'pages',
+                  label: 'Ilość stron',
+                  type: 'text',
+                  localized: true,
+                  defaultValue: '---',
+                },
+                {
+                  name: 'from',
+                  label: 'Tekst \"z\" stron',
+                  type: 'text',
+                  localized: true,
+                  defaultValue: '---',
+                },
+              ],
+            },
           ],
         },
         {

@@ -35,6 +35,7 @@ export type ProductDataProps = {
     productCount: string
     parameters: [{ name: string }]
   }
+  category: string
 }
 
 export type FilterProps = {
@@ -95,18 +96,13 @@ export type BreadcrumbsProps = {
 export type BreadcrumbProductProps = {
   locale: string
   lastCrumbs: string[]
-  product: {
-    title: string
-    crumb: string
-  }
+  product: string
+  last: boolean
 }
 export type BreadcrumbCategoryProps = {
   locale: string
   lastCrumbs: string[]
-  category: {
-    title: string
-    crumb: string
-  }
+  category: string
   last: boolean
 }
 

@@ -6,10 +6,10 @@ import payloadParamsGraphQLBuilder from '@/lib/payloadParamsQueryBulider'
 
 const useGetPayloadProductsGraphQL = (
   locale: string,
-  limit: string | null = '24',
   page: string | null = '1',
   category: string = '',
   query: { [key: string]: string[] } | null = null,
+  singleProduct: string = '',
 ) => {
   let where = payloadParamsGraphQLBuilder(query)
 
@@ -22,12 +22,13 @@ const useGetPayloadProductsGraphQL = (
     })
   }
   where = { active: { equals: true }, ...where }
+  if (singleProduct) where = { active: { equals: true }, slug: { equals: singleProduct }, ...where }
   const getPayloadProducts = async () => {
     // Uwaga: locale bez cudzysłowów — enum!
     const graphqlQuery = {
       query: `
         query GetProducts {
-          Products(locale: ${locale}, limit: ${limit}, page: ${page}, where: ${JSON.stringify(where).replace(/"([^"]+)":/g, '$1:')}) {
+          Products(locale: ${locale}, limit: 24, page: ${page}, where: ${JSON.stringify(where).replace(/"([^"]+)":/g, '$1:')}) {
             docs {
               active
               new
@@ -90,7 +91,7 @@ const useGetPayloadProductsGraphQL = (
   }
 
   const { data, error, isError, isLoading } = useQuery({
-    queryKey: ['productsGraphQL', locale, limit, page, category, query],
+    queryKey: ['productsGraphQL', locale, page, category, query],
     queryFn: getPayloadProducts,
   })
 

@@ -37,7 +37,7 @@ const Categories = ({ locale }) => {
   )
 }
 
-const Filters = ({ locale, filters, category = undefined }: FilterProps) => {
+const Filters = ({ locale, filters, category }: FilterProps) => {
   const { data, isLoading } = useGetProductParameters(locale, category)
   if (isLoading) return <Loading />
   const filterNames = filters.map((filter: { name: string }) => filter.name)

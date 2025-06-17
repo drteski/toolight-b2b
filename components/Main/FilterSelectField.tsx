@@ -29,7 +29,6 @@ const FilterSelectField = ({ data }: { data: { name: string; options: string[] }
       return prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     })
   }
-
   useEffect(() => {
     setQueryParam(name, selectedValues)
   }, [selectedValues, setQueryParam, name])

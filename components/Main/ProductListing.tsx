@@ -6,7 +6,6 @@ import Image from 'next/image'
 
 const ProductListing = ({ products, layout }) => {
   const pathname = usePathname()
-  console.log(layout)
   return (
     <div className="max-w-inner-wrapper mx-auto my-0 px-padding relative">
       <div className="py-padding-vertical grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-padding">

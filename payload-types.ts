@@ -1025,6 +1025,12 @@ export interface Layout {
     productDetails?: string | null;
     productDescription?: string | null;
     productDownload?: string | null;
+    listing?: {
+      nextPage?: string | null;
+      prevPage?: string | null;
+      pages?: string | null;
+      from?: string | null;
+    };
   };
   pos?: {
     heading?: string | null;
@@ -1207,6 +1213,14 @@ export interface LayoutSelect<T extends boolean = true> {
         productDetails?: T;
         productDescription?: T;
         productDownload?: T;
+        listing?:
+          | T
+          | {
+              nextPage?: T;
+              prevPage?: T;
+              pages?: T;
+              from?: T;
+            };
       };
   pos?:
     | T
