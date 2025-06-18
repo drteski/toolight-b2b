@@ -27,8 +27,18 @@ export const uploadProducts = async () => {
 
       for await (const product of products) {
         current++
-        const { id, b2b, sku, ean, b2bUrl, subiektTitle, descriptions, images, parameters } =
-          product
+        const {
+          id,
+          b2b,
+          sku,
+          ean,
+          b2bUrl,
+          subiektTitle,
+          titles,
+          descriptions,
+          images,
+          parameters,
+        } = product
 
         const slug = slugify(subiektTitle, {
           lower: true,
@@ -39,13 +49,14 @@ export const uploadProducts = async () => {
         try {
           const existingProduct = await payload.find({
             collection: 'products',
-            where: { slug: { equals: slug } },
+            where: { slug: { equals: slug }, sku: { equals: sku } },
           })
 
           const commonData = {
             slug,
             subiektId: id,
             title: subiektTitle,
+            // titles[locale.code] === '' ? `${subiektTitle} ${locale.code}` : titles[locale.code],
             active: b2b,
             sku,
             ean,

@@ -11,20 +11,51 @@ const useGetPayloadProductsGraphQL = (
   query: { [key: string]: string[] } | null = null,
   singleProduct: string = '',
 ) => {
-  let where = payloadParamsGraphQLBuilder(query)
-
-  where.AND = where.AND || []
-  if (category !== '') {
-    where.AND.push({
-      category: {
-        slug: { equals: category },
-      },
-    })
+  const getCategoryId = async (): Promise<number | null> => {
+    if (!category) return null
+    try {
+      const res = await axios.post(
+        '/api/graphql',
+        {
+          query: `
+            query GetCategories {
+              Categories(locale: ${locale}, limit: 1, where: { slug: { equals: "${category}" } }) {
+                docs {
+                  id
+                  slug
+                }
+              }
+            }
+          `,
+        },
+        {
+          headers: {
+            'Accept-Language': locale,
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      return res.data?.data?.Categories?.docs?.[0]?.id ?? null
+    } catch (err) {
+      console.error('getCategory error:', err)
+      return null
+    }
   }
-  where = { active: { equals: true }, ...where }
-  if (singleProduct) where = { active: { equals: true }, slug: { equals: singleProduct }, ...where }
+
   const getPayloadProducts = async () => {
-    // Uwaga: locale bez cudzysłowów — enum!
+    const where = payloadParamsGraphQLBuilder(query) || {}
+    where.AND = where.AND || []
+    where.active = { equals: true }
+
+    if (singleProduct) {
+      where.slug = { equals: singleProduct }
+    }
+
+    const categoryId = await getCategoryId()
+    if (categoryId) {
+      where.AND.push({ category: { equals: categoryId } })
+    }
+
     const graphqlQuery = {
       query: `
         query GetProducts {
@@ -45,12 +76,36 @@ const useGetPayloadProductsGraphQL = (
                 url
                 width
                 height
+                sizes {
+                  thumbnail {
+                      url
+                      width
+                      height
+                  }
+                  main {
+                      url
+                      width
+                      height
+                  }
+                }
               }
               gallery {
-                image{
+                image {
                   url
                   width
                   height
+                  sizes {
+                  thumbnail {
+                      url
+                      width
+                      height
+                  }
+                  main {
+                      url
+                      width
+                      height
+                  }
+                }
                 }
               }
             }
@@ -65,33 +120,27 @@ const useGetPayloadProductsGraphQL = (
       `,
     }
 
-    return await axios
-      .post('/api/graphql', graphqlQuery, {
+    try {
+      const res = await axios.post('/api/graphql', graphqlQuery, {
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
         },
       })
-      .then((res) => {
-        const graphqlResponse = res.data
 
-        // Obsługa błędów GraphQL
-        if (graphqlResponse.errors) {
-          throw new Error(graphqlResponse.errors[0].message)
-        }
+      if (res.data.errors) {
+        throw new Error(res.data.errors[0].message)
+      }
 
-        return graphqlResponse.data?.Products
-      })
-      .catch((error) => {
-        console.error('GraphQL error:', error)
-        return {
-          message: error.message,
-        }
-      })
+      return res.data.data?.Products
+    } catch (error: any) {
+      console.error('GraphQL error:', error)
+      return { message: error.message }
+    }
   }
 
   const { data, error, isError, isLoading } = useQuery({
-    queryKey: ['productsGraphQL', locale, page, category, query],
+    queryKey: ['productsGraphQL', locale, page, category, query, singleProduct],
     queryFn: getPayloadProducts,
   })
 

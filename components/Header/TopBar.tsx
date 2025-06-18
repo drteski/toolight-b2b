@@ -33,7 +33,7 @@ const TopBar = ({ locale }: Locale) => {
           <SheetTrigger asChild>
             <Button
               size="sm"
-              className="text-foreground bg-neutral-100 hover:bg-neutral-200 border-neutral-100 cursor-pointer flex items-center gap-2"
+              className={`text-foreground bg-neutral-100 hover:bg-neutral-200 border-neutral-100 cursor-pointer flex items-center gap-2 ${locales.length <= 1 ? 'hidden' : ''}`}
             >
               <Flags country={code} />
               {label}

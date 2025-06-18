@@ -7,14 +7,14 @@ export const locales = [
     label: 'Polski',
     code: 'pl',
   },
-  {
-    label: 'English',
-    code: 'en',
-  },
-  {
-    label: 'Français',
-    code: 'fr',
-  },
+  // {
+  //   label: 'English',
+  //   code: 'en',
+  // },
+  // {
+  //   label: 'Français',
+  //   code: 'fr',
+  // },
 ]
 const defaultLocale = 'pl'
 

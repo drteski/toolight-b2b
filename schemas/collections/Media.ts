@@ -17,5 +17,27 @@ export const Media: CollectionConfig = {
     staticDir: 'media/files',
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/*'],
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 400,
+        position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 20, lossless: false },
+        },
+      },
+      {
+        name: 'main',
+        width: 1500,
+        height: 1500,
+        position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 80, lossless: true },
+        },
+      },
+    ],
   },
 }

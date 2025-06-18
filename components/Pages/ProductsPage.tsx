@@ -27,6 +27,8 @@ export const ProductsData = ({ locale, layout, category }: ProductDataProps) => 
             title={layout.productHeading}
             countText={layout.productCount}
             count={data.totalDocs}
+            category={category}
+            locale={locale}
           />
           <Filters locale={locale} filters={layout.parameters} category={category} />
           <ProductListing products={data.docs} layout={layout} />

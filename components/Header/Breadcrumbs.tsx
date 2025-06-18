@@ -13,64 +13,64 @@ import {
 import { notFound } from 'next/navigation'
 import useGetPayloadProducts from '@/hooks/useGetPayloadProducts'
 
-const BreadcrumbsCategoryData = ({
+const BreadcrumbsSlugResolver = ({
   locale,
-  category,
+  slug,
   lastCrumbs,
   last,
-}: BreadcrumbCategoryProps) => {
-  const [existingCategory, setExistingCategory] = useState<{ title: string; slug: string }>()
-  const { data, isLoading } = useGetPayloadData('categories', false, locale)
-  useEffect(() => {
-    if (isLoading) return
-    const fechedCategory = data.docs.find((doc: { slug: string }) => doc.slug === category)
-    if (!fechedCategory) return notFound()
-    setExistingCategory(fechedCategory)
-  }, [data, category, isLoading])
-  if (!existingCategory) return <Loading />
-  return (
-    <>
-      {last ? (
-        <span>{existingCategory.title}</span>
-      ) : (
-        <>
-          <Link
-            className="hover:text-neutral-400 transition-colors"
-            href={`/${locale}/${lastCrumbs[0]}/${existingCategory.slug}`}
-          >
-            {existingCategory.title}
-          </Link>
-          <ChevronRight className="size-4" />
-        </>
-      )}
-    </>
+}: {
+  locale: string
+  slug: string
+  lastCrumbs: string[]
+  last: boolean
+}) => {
+  const [type, setType] = useState<'category' | 'product' | null>(null)
+  const [title, setTitle] = useState<string | null>(null)
+  const { data: categoryData, isLoading: categoryLoading } = useGetPayloadData(
+    'categories',
+    false,
+    locale,
   )
-}
-const BreadcrumbsProductData = ({ locale, lastCrumbs, product, last }: BreadcrumbProductProps) => {
-  const [existingProduct, setExistingProduct] = useState<{ title: string; slug: string }>()
-  const { data, isLoading } = useGetPayloadProducts(locale, '1', '', {}, product)
+  const { data: productData, isLoading: productLoading } = useGetPayloadProducts(
+    locale,
+    '1',
+    '',
+    {},
+    slug,
+  )
+
   useEffect(() => {
-    if (isLoading) return
-    const fechedProduct = data.docs.find((doc: { slug: string }) => doc.slug === product)
-    if (!fechedProduct) return notFound()
-    setExistingProduct(fechedProduct)
-  }, [data, product, isLoading])
-  if (!existingProduct) return <Loading />
-  return (
+    if (categoryLoading || productLoading) return
+
+    const foundCategory = categoryData?.docs?.find((doc: { slug: string }) => doc.slug === slug)
+    const foundProduct = productData?.docs?.find((doc: { slug: string }) => doc.slug === slug)
+
+    if (foundCategory) {
+      setType('category')
+      setTitle(foundCategory.title)
+    } else if (foundProduct) {
+      setType('product')
+      setTitle(foundProduct.title)
+    } else {
+      notFound()
+    }
+  }, [categoryData, productData, slug, categoryLoading, productLoading])
+
+  if (!type || !title) return <Loading />
+
+  const href =
+    type === 'category'
+      ? `/${locale}/${lastCrumbs[0]}/${slug}`
+      : `/${locale}/${lastCrumbs[0]}/${lastCrumbs[1]}/${slug}`
+
+  return last ? (
+    <span>{title}</span>
+  ) : (
     <>
-      {last ? (
-        <span>{existingProduct.title}</span>
-      ) : (
-        <>
-          <Link
-            className="hover:text-neutral-400 transition-colors"
-            href={`/${locale}/${lastCrumbs[0]}/${lastCrumbs[1]}/${existingProduct.slug}`}
-          >
-            {existingProduct.title}
-          </Link>
-          <ChevronRight className="size-4" />
-        </>
-      )}
+      <Link className="hover:text-neutral-400 transition-colors" href={href}>
+        {title}
+      </Link>
+      <ChevronRight className="size-4" />
     </>
   )
 }
@@ -108,26 +108,17 @@ const BreadcrumbsData = ({ locale, crumbs }: BreadcrumbsProps) => {
             </Fragment>
           )
 
-        if (index === 1)
+        if (index === 1 || index === 2)
           return (
-            <BreadcrumbsCategoryData
+            <BreadcrumbsSlugResolver
               key={`${index}${crumb}`}
               locale={locale}
               lastCrumbs={crumbs}
-              category={crumb}
+              slug={crumb}
               last={index === crumbs.length - 1}
             />
           )
-        if (index === 2)
-          return (
-            <BreadcrumbsProductData
-              lastCrumbs={crumbs}
-              locale={locale}
-              key={`${index}${crumb}`}
-              product={crumb}
-              last={index === crumbs.length - 1}
-            />
-          )
+
         return <Fragment key="nieistnieje"></Fragment>
       })}
     </>
