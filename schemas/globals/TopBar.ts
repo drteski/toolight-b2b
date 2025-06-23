@@ -18,7 +18,7 @@ export const TopBar: GlobalConfig = {
           label: 'Tytuł',
           type: 'text',
           localized: true,
-          defaultValue: '*((Globalne > Górny Pasek))*',
+          defaultValue: '---',
         },
         {
           name: 'languageSelect',

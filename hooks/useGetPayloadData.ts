@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
-const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) => {
+export const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) => {
   const getPayloadData = async () => {
     return await axios
       .get(`/api/${globals ? 'globals' : ''}/${endpoint}/?depth=3&draft=false&locale=${locale}`, {
@@ -11,6 +11,7 @@ const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) =
           'Accept-Language': locale,
           'Content-Type': 'application/x-www-form-urlencoded',
           'X-Payload-HTTP-Method-Override': 'GET',
+          'Cache-Control': 'public, max-age=300',
         },
       })
       .then((res) => res.data)
@@ -24,5 +25,3 @@ const useGetPayloadData = (endpoint: string, globals: boolean, locale: string) =
   })
   return { data, error, isError, isLoading }
 }
-
-export default useGetPayloadData

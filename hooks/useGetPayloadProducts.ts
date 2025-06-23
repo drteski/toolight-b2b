@@ -2,9 +2,18 @@
 
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import payloadParamsGraphQLBuilder from '@/lib/payloadParamsQueryBulider'
+import { payloadParamsGraphQLBuilder } from '@/lib/payloadParamsQueryBulider'
 
-const useGetPayloadProductsGraphQL = (
+// Dodaj interfejs dla obiektu where
+interface WhereCondition {
+  AND?: any[]
+  active?: { equals: boolean }
+  slug?: { equals: string }
+
+  [key: string]: any
+}
+
+export const useGetPayloadProducts = (
   locale: string,
   page: string | null = '1',
   category: string = '',
@@ -32,6 +41,7 @@ const useGetPayloadProductsGraphQL = (
           headers: {
             'Accept-Language': locale,
             'Content-Type': 'application/json',
+            'Cache-Control': 'public, max-age=300',
           },
         },
       )
@@ -43,10 +53,10 @@ const useGetPayloadProductsGraphQL = (
   }
 
   const getPayloadProducts = async () => {
-    const where = payloadParamsGraphQLBuilder(query) || {}
+    // Użyj type assertion lub stwórz nowy obiekt z odpowiednim typem
+    const where: WhereCondition = payloadParamsGraphQLBuilder(query) || {}
     where.AND = where.AND || []
     where.active = { equals: true }
-
     if (singleProduct) {
       where.slug = { equals: singleProduct }
     }
@@ -55,7 +65,6 @@ const useGetPayloadProductsGraphQL = (
     if (categoryId) {
       where.AND.push({ category: { equals: categoryId } })
     }
-
     const graphqlQuery = {
       query: `
         query GetProducts {
@@ -68,9 +77,15 @@ const useGetPayloadProductsGraphQL = (
               ean
               id
               title
+              description
+              b2bUrl
               slug
               category {
                 slug
+              }
+              parameters {
+                name
+                value
               }
               mainImage {
                 url
@@ -125,6 +140,7 @@ const useGetPayloadProductsGraphQL = (
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300',
         },
       })
 
@@ -146,5 +162,3 @@ const useGetPayloadProductsGraphQL = (
 
   return { data, error, isError, isLoading }
 }
-
-export default useGetPayloadProductsGraphQL

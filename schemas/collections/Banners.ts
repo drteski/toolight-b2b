@@ -20,6 +20,7 @@ export const Banners: CollectionConfig = {
       type: 'text',
       localized: true,
       required: true,
+      defaultValue: '---',
     },
     {
       name: 'active',

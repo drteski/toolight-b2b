@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import useCurrentLocale from '@/hooks/useCurrentLocale'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import { useCurrentLocale } from '@/hooks/useCurrentLocale'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import {
   Accordion,
@@ -24,13 +24,15 @@ const AboutUsData = ({ locale }: Locale) => {
             className="p-padding bg-neutral-100 rounded-xl flex flex-col gap-[calc(var(--spacing-padding)/2)]"
           >
             <div className="flex items-center gap-[calc(var(--spacing-padding)/2)]">
-              <Image
-                src={item.icon.url}
-                width={item.icon.width}
-                height={item.icon.height}
-                alt={item.title}
-                className="object-cover object-center size-12"
-              />
+              {item.icon !== null && (
+                <Image
+                  src={item.icon.url}
+                  width={item.icon.width}
+                  height={item.icon.height}
+                  alt={item.title}
+                  className="object-cover object-center size-12"
+                />
+              )}
               <h3 className="text-2xl font-medium text-foreground">{item.title}</h3>
             </div>
             <div className="text-neutral-600 text-base leading-7">{item.description}</div>
@@ -40,7 +42,7 @@ const AboutUsData = ({ locale }: Locale) => {
       <div className="block xs:hidden px-padding pt-padding">
         <Accordion
           className="flex flex-col gap-padding"
-          defaultValue={data.aboutUs[0].title}
+          defaultValue={data.aboutUs[0]?.title}
           type="single"
           collapsible
         >
@@ -52,13 +54,15 @@ const AboutUsData = ({ locale }: Locale) => {
             >
               <AccordionTrigger className="p-0 flex items-center hover:no-underline">
                 <div className="flex items-center gap-[calc(var(--spacing-padding)/2)]">
-                  <Image
-                    src={item.icon.url}
-                    width={item.icon.width}
-                    height={item.icon.height}
-                    alt={item.title}
-                    className="object-cover object-center size-8"
-                  />
+                  {item.icon !== null && (
+                    <Image
+                      src={item.icon.url}
+                      width={item.icon.width}
+                      height={item.icon.height}
+                      alt={item.title}
+                      className="object-cover object-center size-8"
+                    />
+                  )}
                   <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
                 </div>
               </AccordionTrigger>
@@ -73,7 +77,7 @@ const AboutUsData = ({ locale }: Locale) => {
   )
 }
 
-const AboutUs = () => {
+export const AboutUs = () => {
   const { code } = useCurrentLocale()
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
@@ -86,5 +90,3 @@ const AboutUs = () => {
     </div>
   )
 }
-
-export default AboutUs

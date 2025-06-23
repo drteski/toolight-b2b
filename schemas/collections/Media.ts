@@ -21,16 +21,14 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         width: 400,
-        height: 400,
         position: 'centre',
         formatOptions: {
           format: 'webp',
-          options: { quality: 20, lossless: false },
+          options: { quality: 80, lossless: false },
         },
       },
       {
         name: 'main',
-        width: 1500,
         height: 1500,
         position: 'centre',
         formatOptions: {

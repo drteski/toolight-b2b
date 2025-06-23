@@ -1,7 +1,7 @@
 'use client'
-import React from 'react'
-import useCurrentLocale from '@/hooks/useCurrentLocale'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import React, { useEffect, useState } from 'react'
+import { useCurrentLocale } from '@/hooks/useCurrentLocale'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import {
   Form,
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -29,25 +29,26 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { ContactDataProps, ContactFormProps, Department, Personel } from '@/lib/types'
+import axios from 'axios'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
   city: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
   postalCode: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
   email: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
   phone: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
   message: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+    message: 'Pole nie może być puste',
   }),
 })
 const ContactForm = ({ layout }: ContactFormProps) => {
@@ -63,9 +64,28 @@ const ContactForm = ({ layout }: ContactFormProps) => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  const [message, setMessage] = useState('')
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    await axios
+      .post('/api/message', values)
+      .then(() => setMessage('Wiadomość wysłana'))
+      .catch(() => setMessage('Wystąpił błąd'))
+
+    form.reset({
+      name: '',
+      city: '',
+      postalCode: '',
+      email: '',
+      phone: '',
+      message: '',
+    })
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMessage(''), 5000)
+    return () => clearTimeout(timer)
+  }, [message])
 
   return (
     <Form {...form}>
@@ -173,7 +193,8 @@ const ContactForm = ({ layout }: ContactFormProps) => {
         <Label>
           <span className="text-red-500">*</span> {layout.contact.contactForm.contactRequiredText}
         </Label>
-        <Button className="cursor-pointer" type="submit">
+        {message !== '' && <Label className="text-green-800">{message}</Label>}
+        <Button className="cursor-pointer text-foreground" type="submit">
           {layout.contact.contactForm.contactCta}
         </Button>
       </form>
@@ -189,7 +210,7 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
       <div className="block xs:hidden">
         <Accordion
           className="flex flex-col gap-padding"
-          defaultValue={data.departments[0].id && ''}
+          defaultValue={data.departments[0]?.id}
           type="single"
           collapsible
         >
@@ -201,13 +222,15 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
             >
               <AccordionTrigger className="p-0 flex items-center hover:no-underline">
                 <div className="flex items-center gap-[calc(var(--spacing-padding)/2)]">
-                  <Image
-                    src={item.icon.url}
-                    width={item.icon.width}
-                    height={item.icon.height}
-                    alt={item.title}
-                    className="object-cover object-center size-8"
-                  />
+                  {item.icon !== null && (
+                    <Image
+                      src={item.icon.url}
+                      width={item.icon.width}
+                      height={item.icon.height}
+                      alt={item.title}
+                      className="object-cover object-center size-8"
+                    />
+                  )}
                   <h3 className="text-lg font-medium text-foreground">{item.title}</h3>
                 </div>
               </AccordionTrigger>
@@ -263,7 +286,7 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
         </Accordion>
       </div>
       <div className="hidden xs:block">
-        <Tabs orientation="vertical" defaultValue={data.departments[0].id} className="">
+        <Tabs orientation="vertical" defaultValue={data.departments[0]?.id} className="">
           <TabsList>
             {data.departments.map((item: Department) => (
               <TabsTrigger key={item.id} className="w-full p-2" value={item.id}>
@@ -275,13 +298,15 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
             <TabsContent key={item.id} value={item.id}>
               <div className="flex flex-col gap-padding">
                 <div className="flex gap-padding items-center">
-                  <Image
-                    className="size-12"
-                    src={item.icon.url}
-                    width={item.icon.width}
-                    height={item.icon.height}
-                    alt={item.title}
-                  />
+                  {item.icon !== null && (
+                    <Image
+                      className="size-12"
+                      src={item.icon.url}
+                      width={item.icon.width}
+                      height={item.icon.height}
+                      alt={item.title}
+                    />
+                  )}
                   <h4 className="text-2xl font-medium">{item.title}</h4>
                 </div>
                 <div className="flex flex-col gap-[calc(var(--spacing-padding)/2)] pl-[calc(var(--spacing-padding)_+_48px)]">
@@ -338,7 +363,7 @@ const ContactData = ({ locale, layout }: ContactDataProps) => {
   )
 }
 
-const Contact = () => {
+export const Contact = () => {
   const { code } = useCurrentLocale()
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
@@ -349,7 +374,7 @@ const Contact = () => {
       </div>
       <div className="max-w-inner-wrapper mx-auto my-0 px-padding hidden xs:grid xs:grid-cols-[3fr_8fr] lg:grid-cols-[2fr_3fr] xl:grid-cols-[1fr_1fr] gap-padding pt-padding">
         <div className="flex flex-col gap-4">
-          <h4 className="text-2xl font-medium">{data.contact.colaborationTitle}</h4>
+          <h3 className="text-2xl font-medium">{data.contact.colaborationTitle}</h3>
           <p className="text-sm text-neutral-600">{data.contact.colaborationDescription}</p>
           <div>
             <ContactForm layout={data} />
@@ -360,7 +385,7 @@ const Contact = () => {
       <div className="max-w-inner-wrapper mx-auto my-0 px-padding grid xs:hidden grid-rows-[auto_auto] gap-padding-vertical pt-padding">
         <ContactData locale={code} layout={data} />
         <div className="flex flex-col gap-4">
-          <h4 className="text-xl font-medium">{data.contact.colaborationTitle}</h4>
+          <h3 className="text-xl font-medium">{data.contact.colaborationTitle}</h3>
           <p className="text-sm text-neutral-600">{data.contact.colaborationDescription}</p>
           <div>
             <ContactForm layout={data} />
@@ -370,5 +395,3 @@ const Contact = () => {
     </div>
   )
 }
-
-export default Contact

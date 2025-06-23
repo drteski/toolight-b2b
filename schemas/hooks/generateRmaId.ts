@@ -1,7 +1,7 @@
-import { CollectionBeforeChangeHook } from 'payload'
+import { Collection, CollectionBeforeChangeHook, CollectionSlug, PaginatedDocs } from 'payload'
 
-const generateRmaId: CollectionBeforeChangeHook = async ({ data, req, operation, collection }) => {
-  console.log(data, req, operation, collection)
+export const generateRmaId: CollectionBeforeChangeHook = async ({ data, req, operation }) => {
+  const collection: Collection = req.payload.collections.rma
   if (operation !== 'create') {
     return data
   }
@@ -11,23 +11,9 @@ const generateRmaId: CollectionBeforeChangeHook = async ({ data, req, operation,
   }
 
   try {
-    let collectionSlug: string
+    const collectionSlug: CollectionSlug = collection.config.slug
 
-    if (typeof collection === 'object' && collection !== null) {
-      collectionSlug =
-        collection.slug ||
-        (collection as any).config?.slug ||
-        req.collection ||
-        req.url.split('/')[1]
-    } else if (typeof collection === 'string') {
-      collectionSlug = collection
-    } else {
-      collectionSlug = 'rma'
-    }
-
-    console.log('Używana nazwa kolekcji:', collectionSlug)
-
-    const lastRMA = await req.payload.find({
+    const lastRMA: PaginatedDocs = await req.payload.find({
       collection: collectionSlug,
       limit: 1,
       sort: '-createdAt',
@@ -69,5 +55,3 @@ const generateRmaId: CollectionBeforeChangeHook = async ({ data, req, operation,
 
   return data
 }
-
-export default generateRmaId

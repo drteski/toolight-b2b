@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import generateSlug from '@/schemas/hooks/generateSlug'
 
 export const MainMenu: CollectionConfig = {
   slug: 'main-menu',
@@ -27,7 +26,7 @@ export const MainMenu: CollectionConfig = {
       label: 'Nazwa',
       type: 'text',
       localized: true,
-      defaultValue: 'mainMenuLink.mainMenuLinkTitle',
+      defaultValue: '---',
     },
     {
       name: 'mainMenuLinkUrl',

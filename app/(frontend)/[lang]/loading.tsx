@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '@/components/Header/Logo'
+import { Logo } from '@/components/Header/Logo'
 
 const Loading = () => {
   return (

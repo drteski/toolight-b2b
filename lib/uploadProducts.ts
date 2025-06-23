@@ -3,6 +3,7 @@ import payload from 'payload'
 import payloadConfig from '@/payload.config'
 import { locales } from '@/middleware'
 import slugify from 'slugify'
+import axiosRetry from 'axios-retry'
 
 export const uploadProducts = async () => {
   try {
@@ -27,18 +28,8 @@ export const uploadProducts = async () => {
 
       for await (const product of products) {
         current++
-        const {
-          id,
-          b2b,
-          sku,
-          ean,
-          b2bUrl,
-          subiektTitle,
-          titles,
-          descriptions,
-          images,
-          parameters,
-        } = product
+        const { id, b2b, sku, ean, b2bUrl, subiektTitle, descriptions, images, parameters } =
+          product
 
         const slug = slugify(subiektTitle, {
           lower: true,
@@ -67,7 +58,11 @@ export const uploadProducts = async () => {
             const uploads: { image: number; featured: boolean }[] = []
             let i: number = 1
             for await (const image of images) {
-              const res = await axios.get(image, { responseType: 'arraybuffer' })
+              axiosRetry(axios, { retries: 3 })
+              const res = await axios.get(image, {
+                responseType: 'arraybuffer',
+                timeout: 5000,
+              })
               const data: Buffer<ArrayBufferLike> = Buffer.from(res.data, 'binary')
               const size: number = res.headers['content-length']
               const mimetype: string = res.headers['content-type']

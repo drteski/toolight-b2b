@@ -1,17 +1,12 @@
 'use client'
 import React, { Fragment, useEffect, useState } from 'react'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import {
-  BreadcrumbCategoryProps,
-  BreadcrumbProductProps,
-  BreadcrumbsProps,
-  MainMenuItem,
-} from '@/lib/types'
+import { BreadcrumbsProps, MainMenuItem } from '@/lib/types'
 import { notFound } from 'next/navigation'
-import useGetPayloadProducts from '@/hooks/useGetPayloadProducts'
+import { useGetPayloadProducts } from '@/hooks/useGetPayloadProducts'
 
 const BreadcrumbsSlugResolver = ({
   locale,
@@ -125,7 +120,7 @@ const BreadcrumbsData = ({ locale, crumbs }: BreadcrumbsProps) => {
   )
 }
 
-const Breadcrumbs = ({ crumbs, locale }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ crumbs, locale }: BreadcrumbsProps) => {
   const { data, isLoading } = useGetPayloadData('layout', true, locale)
   if (isLoading) return <Loading />
   return (
@@ -140,5 +135,3 @@ const Breadcrumbs = ({ crumbs, locale }: BreadcrumbsProps) => {
     </div>
   )
 }
-
-export default Breadcrumbs

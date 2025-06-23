@@ -1,47 +1,28 @@
 import React from 'react'
-import { locales } from '@/middleware'
 
 export type CurrentLocale = { label: string; code: string }
 export type Locale = { locale: string }
-export type LocaleCode = (typeof locales)[number]['code']
 export type SubPageProps = {
-  children: React.ReactNode
-  params: {
+  params: Promise<{
     lang: string
     subpage: string
-  }
+  }>
 }
 
 export type CategoryPageProps = {
-  params: {
+  params: Promise<{
     lang: string
     subpage: string
     category: string
-  }
+  }>
 }
 export type ProductPageProps = {
-  params: {
+  params: Promise<{
     lang: string
     subpage: string
     category: string
     product: string
-  }
-}
-
-export type ProductDataProps = {
-  locale: string
-  layout: {
-    productHeading: string
-    productCount: string
-    parameters: [{ name: string }]
-  }
-  category: string
-}
-
-export type FilterProps = {
-  locale: string
-  filters: [{ name: string }]
-  category?: string | undefined
+  }>
 }
 
 // HOOKS
@@ -59,11 +40,6 @@ export type ComponentProps = {
   className?: string
 }
 
-export type NavProps = {
-  code: string
-  items: MainMenuItem[]
-}
-
 export type FlagProps = {
   country: string
   className?: string
@@ -79,12 +55,6 @@ export type ContactFormProps = {
 export type ContactDataProps = {
   locale: string
   layout: Layout
-}
-
-export type PageHeadingProps = {
-  title: string
-  countText: string
-  count: number
 }
 
 export type BreadcrumbsProps = {

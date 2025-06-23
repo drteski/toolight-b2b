@@ -160,6 +160,7 @@
 	--breakpoint-xl: 1440px;
 	--spacing-inner-wrapper: var(--inner-wrapper);
 	--spacing-padding: var(--pad);
+	--spacing-padding-half: calc(var(--pad) / 2);
 	--spacing-padding-vertical: calc(var(--pad) * 2);
 }
 

@@ -1019,6 +1019,8 @@ export interface Layout {
   header?: {
     searchPlaceholder?: string | null;
     searchPlaceholderDropdown?: string | null;
+    noProducts?: string | null;
+    showAll?: string | null;
   };
   banners: {
     bannerAutoplay?: boolean | null;
@@ -1067,6 +1069,7 @@ export interface Layout {
     productDetails?: string | null;
     productDescription?: string | null;
     productDownload?: string | null;
+    noProducts?: string | null;
     listing?: {
       nextPage?: string | null;
       prevPage?: string | null;
@@ -1083,6 +1086,21 @@ export interface Layout {
     heading?: string | null;
     searchPlaceholder?: string | null;
     downloadBtn?: string | null;
+  };
+  other: {
+    notFound?: string | null;
+    defaultCategoryPage: number | MainMenu;
+  };
+  email: {
+    host: string;
+    port: string;
+    senderEmail: string;
+    password: string;
+    senderName: string;
+    subject: string;
+    senderReplay: {
+      subject: string;
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1198,6 +1216,8 @@ export interface LayoutSelect<T extends boolean = true> {
     | {
         searchPlaceholder?: T;
         searchPlaceholderDropdown?: T;
+        noProducts?: T;
+        showAll?: T;
       };
   banners?:
     | T
@@ -1255,6 +1275,7 @@ export interface LayoutSelect<T extends boolean = true> {
         productDetails?: T;
         productDescription?: T;
         productDownload?: T;
+        noProducts?: T;
         listing?:
           | T
           | {
@@ -1277,6 +1298,27 @@ export interface LayoutSelect<T extends boolean = true> {
         heading?: T;
         searchPlaceholder?: T;
         downloadBtn?: T;
+      };
+  other?:
+    | T
+    | {
+        notFound?: T;
+        defaultCategoryPage?: T;
+      };
+  email?:
+    | T
+    | {
+        host?: T;
+        port?: T;
+        senderEmail?: T;
+        password?: T;
+        senderName?: T;
+        subject?: T;
+        senderReplay?:
+          | T
+          | {
+              subject?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

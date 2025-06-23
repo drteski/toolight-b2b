@@ -25,6 +25,7 @@ const useGetCategoryIdBySlug = (slug: string | undefined, locale: string) => {
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300',
         },
       })
       .then((res) => {
@@ -60,7 +61,7 @@ const useGetCategoryIdBySlug = (slug: string | undefined, locale: string) => {
   return { categoryId, isLoading, isError, error }
 }
 
-const useGetProductParameters = (locale: string, categorySlug?: string) => {
+export const useGetProductParameters = (locale: string, categorySlug?: string) => {
   // Normalizacja categorySlug → undefined jeżeli pusty
   const normalizedCategorySlug =
     categorySlug && categorySlug.trim() !== '' ? categorySlug : undefined
@@ -108,6 +109,7 @@ const useGetProductParameters = (locale: string, categorySlug?: string) => {
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300',
         },
       })
       .then((res) => {
@@ -154,5 +156,3 @@ const useGetProductParameters = (locale: string, categorySlug?: string) => {
 
   return { data, error, isError, isLoading: isLoading || isLoadingCategory }
 }
-
-export default useGetProductParameters

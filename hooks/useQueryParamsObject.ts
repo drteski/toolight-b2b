@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 
-const useQueryParamsObject = () => {
+export const useQueryParamsObject = () => {
   const searchParams = useSearchParams()
 
   return useMemo(() => {
@@ -23,5 +23,3 @@ const useQueryParamsObject = () => {
     return obj
   }, [searchParams])
 }
-
-export default useQueryParamsObject

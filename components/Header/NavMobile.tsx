@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { MenuIcon } from 'lucide-react'
-
 import {
   Drawer,
   DrawerClose,
@@ -11,14 +10,23 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import { NavProps } from '@/lib/types'
+import { MainMenuItem } from '@/lib/types'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
-const NavMobile = ({ code, items }: NavProps) => {
+type NavProps = {
+  locale: string
+  items: MainMenuItem[]
+}
+
+export const NavMobile = ({ locale, items }: NavProps) => {
   return (
     <div>
       <Drawer>
-        <DrawerTrigger className="flex items-center justify-center p-2 ">
+        <DrawerTrigger
+          className="flex items-center justify-center p-2"
+          name="Menu"
+          aria-label="Menu"
+        >
           <MenuIcon className="size-8 text-foreground" />
         </DrawerTrigger>
         <DrawerContent>
@@ -32,7 +40,7 @@ const NavMobile = ({ code, items }: NavProps) => {
               <DrawerClose key={item.mainMenuLinkUrl} asChild>
                 <Link
                   className="uppercase text-2xl hover:text-accent transition-colors"
-                  href={`/${code}/${item.mainMenuLinkUrl}`}
+                  href={`/${locale}/${item.mainMenuLinkUrl}`}
                 >
                   {item.mainMenuLinkTitle}
                 </Link>
@@ -44,5 +52,3 @@ const NavMobile = ({ code, items }: NavProps) => {
     </div>
   )
 }
-
-export default NavMobile

@@ -135,6 +135,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       ref={carouselRef}
+      className="h-full"
       // className="overflow-hidden"
       data-slot="carousel-content"
     >

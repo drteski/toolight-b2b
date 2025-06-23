@@ -14,21 +14,23 @@ import Link from 'next/link'
 import { locales } from '@/middleware'
 import { XIcon } from 'lucide-react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import { CurrentLocale, Locale } from '@/lib/types'
 import Loading from '@/app/(frontend)/[lang]/loading'
 
-const TopBar = ({ locale }: Locale) => {
-  const { label, code } = locales.filter(
+export const TopBar = ({ locale }: Locale) => {
+  const foundLocale = locales.filter(
     (currentLocale: CurrentLocale) => currentLocale.code === locale,
-  )[0]
+  )
+
+  const { label, code } = foundLocale[0] || { code: 'pl', label: 'Polski' }
   const { data, isLoading } = useGetPayloadData('top-bar', true, locale)
   if (isLoading) return <Loading />
 
   return (
     <div className="bg-neutral-100">
       <div className="flex justify-between items-center my-0 mx-auto max-w-inner-wrapper px-padding py-2">
-        <span className="text-neutral-500">{data.topBar.topBarText}</span>
+        <span className="text-neutral-700">{data.topBar.topBarText}</span>
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -86,5 +88,3 @@ const TopBar = ({ locale }: Locale) => {
     </div>
   )
 }
-
-export default TopBar

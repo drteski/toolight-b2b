@@ -24,6 +24,7 @@ export const resolveSlugType = async (
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300',
         },
       },
     )
@@ -49,6 +50,7 @@ export const resolveSlugType = async (
         headers: {
           'Accept-Language': locale,
           'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300',
         },
       },
     )

@@ -6,17 +6,24 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-const ListingNavigation = ({
-  nav,
-  layout,
-}: {
+type ListingNavigationProps = {
   nav: {
-    nextPage: string
-    prevPage: string
-    totalPages: string
     page: string
+    totalPages: string
+    prevPage: string | null
+    nextPage: string | null
   }
-}) => {
+  layout: {
+    listing: {
+      pages: string
+      from: string
+      nextPage: string
+      prevPage: string
+    }
+  }
+}
+
+export const ListingNavigation = ({ nav, layout }: ListingNavigationProps) => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -29,7 +36,7 @@ const ListingNavigation = ({
     },
     [searchParams],
   )
-  const handlePageChange = (page: string) => {
+  const handlePageChange = (page: string | null) => {
     if (page)
       router.push(
         pathname + '?' + createQueryString('page', page > nav.totalPages ? nav.totalPages : page),
@@ -40,6 +47,7 @@ const ListingNavigation = ({
       <Button
         className="cursor-pointer"
         size="icon"
+        aria-label={layout.listing.prevPage}
         disabled={nav.prevPage === null}
         onClick={() => handlePageChange(nav.prevPage)}
       >
@@ -54,6 +62,7 @@ const ListingNavigation = ({
       <Button
         className="cursor-pointer"
         size="icon"
+        aria-label={layout.listing.nextPage}
         disabled={nav.nextPage === null}
         onClick={() => handlePageChange(nav.nextPage)}
       >
@@ -62,5 +71,3 @@ const ListingNavigation = ({
     </div>
   )
 }
-
-export default ListingNavigation

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import useCurrentLocale from '@/hooks/useCurrentLocale'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import { useCurrentLocale } from '@/hooks/useCurrentLocale'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import {
   Carousel,
@@ -48,7 +48,7 @@ const PopularCategoriesData = ({ locale }: Locale) => {
     </div>
   )
 }
-const PopularCategories = ({}) => {
+export const PopularCategories = ({}) => {
   const { code } = useCurrentLocale()
   const { data, isLoading } = useGetPayloadData('layout', true, code)
   if (isLoading) return <Loading />
@@ -63,5 +63,3 @@ const PopularCategories = ({}) => {
     </div>
   )
 }
-
-export default PopularCategories

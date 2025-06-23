@@ -1,9 +1,9 @@
 import './globals.css'
 import { ReactNode } from 'react'
 import { Providers } from '@/components/Providers'
-import TopBar from '@/components/Header/TopBar'
-import Navbar from '@/components/Header/Navbar'
-import Footer from '@/components/Footer'
+import { TopBar } from '@/components/Header/TopBar'
+import { Navbar } from '@/components/Header/Navbar'
+import { Footer } from '@/components/Footer'
 
 const RootLayout = async ({
   children,

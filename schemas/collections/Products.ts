@@ -15,7 +15,9 @@ export const Products: CollectionConfig = {
   },
   fields: [
     {
-      type: 'number', name: 'subiektId', admin: {
+      type: 'number',
+      name: 'subiektId',
+      admin: {
         hidden: true,
       },
     },
@@ -45,18 +47,21 @@ export const Products: CollectionConfig = {
           name: 'active',
           type: 'checkbox',
           label: 'Aktywny',
+          defaultValue: false,
           admin: { style: { alignSelf: 'end', justifyContent: 'center', paddingBottom: 6 } },
         },
         {
           name: 'new',
           type: 'checkbox',
           label: 'Nowość',
+          defaultValue: false,
           admin: { style: { alignSelf: 'end', justifyContent: 'center', paddingBottom: 6 } },
         },
         {
           name: 'sale',
           type: 'checkbox',
           label: 'Wyprzedaż',
+          defaultValue: false,
           admin: { style: { alignSelf: 'end', justifyContent: 'center', paddingBottom: 6 } },
         },
       ],
@@ -213,8 +218,8 @@ export const Products: CollectionConfig = {
       ({ data, req }) => {
         const isDuplicate =
           req.pathname.split('/').filter(Boolean)[
-          req.pathname.split('/').filter(Boolean).length - 1
-            ] === 'duplicate'
+            req.pathname.split('/').filter(Boolean).length - 1
+          ] === 'duplicate'
         if (req && isDuplicate && data.title) {
           data.title = `Kopia ${data.title}`
         }

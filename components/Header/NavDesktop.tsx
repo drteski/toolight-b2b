@@ -1,16 +1,21 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import { NavProps } from '@/lib/types'
+import { MainMenuItem } from '@/lib/types'
 
-const NavDesktop = ({ code, items }: NavProps) => {
+type NavProps = {
+  locale: string
+  items: MainMenuItem[]
+}
+
+export const NavDesktop = ({ locale, items }: NavProps) => {
   return (
     <nav className="flex xs:gap-3 lg:gap-6 xl:gap-8 items-center">
       {items.map((item) => (
         <Link
           key={item.id}
           className="uppercase font-medium text-sm hover:text-accent transition-colors"
-          href={`/${code}/${item.mainMenuLinkUrl}`}
+          href={`/${locale}/${item.mainMenuLinkUrl}`}
         >
           {item.mainMenuLinkTitle}
         </Link>
@@ -18,5 +23,3 @@ const NavDesktop = ({ code, items }: NavProps) => {
     </nav>
   )
 }
-
-export default NavDesktop

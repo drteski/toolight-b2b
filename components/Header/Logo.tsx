@@ -1,6 +1,6 @@
 import { ComponentProps } from '@/lib/types'
 
-const Logo = (props: ComponentProps) => {
+export const Logo = (props: ComponentProps) => {
   const styles = {
     cls1: {
       fill: 'none',
@@ -228,5 +228,3 @@ const Logo = (props: ComponentProps) => {
     </div>
   )
 }
-
-export default Logo

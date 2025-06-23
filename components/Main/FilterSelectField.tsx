@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { Command, CommandGroup, CommandItem } from '@/components/ui/command'
 import { cn } from '@/lib/utils'
-import useQueryParamsObject from '@/hooks/useQueryParamsObject'
-import useSetQueryParam from '@/hooks/useSetQueryParam'
+import { useQueryParamsObject } from '@/hooks/useQueryParamsObject'
+import { useSetQueryParam } from '@/hooks/useSetQueryParam'
 
-const FilterSelectField = ({ data }: { data: { name: string; options: string[] } }) => {
+export const FilterSelectField = ({ data }: { data: { name: string; options: string[] } }) => {
   const { name, options } = data
   const queryParams = useQueryParamsObject()
   const setQueryParam = useSetQueryParam()
@@ -42,13 +42,14 @@ const FilterSelectField = ({ data }: { data: { name: string; options: string[] }
           // variant="outline"
           role="combobox"
           aria-expanded={open}
+          aria-label={name}
           className="w-[200px] justify-between bg-white text-foreground border border-neutral-200 hover:bg-neutral-100 cursor-pointer"
         >
           {selectedValues.length > 0 ? `${selectedValues.length} wybrano` : name}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0 ">
+      <PopoverContent className="w-[200px] max-h-[200px] overflow-y-auto p-0 ">
         <Command>
           <CommandGroup>
             {options.map((option: string) => (
@@ -76,5 +77,3 @@ const FilterSelectField = ({ data }: { data: { name: string; options: string[] }
     </Popover>
   )
 }
-
-export default FilterSelectField

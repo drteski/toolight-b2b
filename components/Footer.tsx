@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import useGetPayloadData from '@/hooks/useGetPayloadData'
+import { useGetPayloadData } from '@/hooks/useGetPayloadData'
 import Loading from '@/app/(frontend)/[lang]/loading'
 import {
   Dialog,
@@ -10,9 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import RichTextRenderer from '@/components/RichText'
+import { RichTextRenderer } from '@/components/RichText'
 
-const Footer = ({ locale }: { locale: string }) => {
+export const Footer = ({ locale }: { locale: string }) => {
   const { data, isLoading } = useGetPayloadData('footer', true, locale)
   if (isLoading) return <Loading />
   return (
@@ -47,5 +47,3 @@ const Footer = ({ locale }: { locale: string }) => {
     </footer>
   )
 }
-
-export default Footer
