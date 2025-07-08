@@ -51,6 +51,8 @@ export const Banners: CollectionConfig = {
         width: 400,
         height: undefined,
         position: 'centre',
+        fit: 'cover',
+        withoutEnlargement: false,
         formatOptions: {
           format: 'webp',
           options: { quality: 20, lossless: false },
@@ -61,6 +63,8 @@ export const Banners: CollectionConfig = {
         width: 1920,
         height: 1080,
         position: 'centre',
+        fit: 'cover',
+        withoutEnlargement: false,
         formatOptions: {
           format: 'webp',
           options: { quality: 80, lossless: true },
@@ -70,6 +74,10 @@ export const Banners: CollectionConfig = {
     bulkUpload: false,
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/*'],
+    resizeOptions: {
+      fit: 'cover',
+      withoutEnlargement: false,
+    },
     formatOptions: {
       format: 'webp',
       options: { quality: 100, lossless: true },

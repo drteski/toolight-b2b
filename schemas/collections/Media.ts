@@ -21,7 +21,9 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         width: 400,
+        height: undefined,
         position: 'centre',
+        withoutEnlargement: false,
         formatOptions: {
           format: 'webp',
           options: { quality: 80, lossless: false },
@@ -30,7 +32,9 @@ export const Media: CollectionConfig = {
       {
         name: 'main',
         height: 1500,
+        width: undefined,
         position: 'centre',
+        withoutEnlargement: false,
         formatOptions: {
           format: 'webp',
           options: { quality: 80, lossless: true },
