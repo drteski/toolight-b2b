@@ -48,7 +48,6 @@ const BannerData = ({ banners }: BannerProps) => {
         stopOnInteraction: false,
       })
     : undefined
-  console.log(banners)
   return (
     <>
       <Carousel

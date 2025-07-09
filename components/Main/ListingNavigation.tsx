@@ -54,9 +54,9 @@ export const ListingNavigation = ({ nav, layout }: ListingNavigationProps) => {
         <ChevronLeft className="size-4" />
       </Button>
       <Input
-        placeholder={`${nav.page} ${layout.listing.from} ${nav.totalPages} ${layout.listing.pages}`}
+        placeholder={`${nav.page} ${layout.listing.from} ${nav.totalPages}`}
         type="number"
-        className="max-w-20"
+        className="max-w-20 text-center"
         onChange={(e) => handlePageChange(e.target.value)}
       />
       <Button
