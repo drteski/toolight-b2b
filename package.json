@@ -56,7 +56,7 @@
 		"jsx-email": "^2.7.2",
 		"lucide-react": "^0.511.0",
 		"negotiator": "^1.0.0",
-		"next": "15.3.0",
+		"next": "15.3.3",
 		"nodemailer": "^7.0.3",
 		"payload": "^3.40.0",
 		"pm2": "^6.0.8",

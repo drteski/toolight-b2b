@@ -85,7 +85,7 @@ const Gallery = ({ data }: GalleryProps) => {
                   width={productImg.image.width}
                   height={productImg.image.height}
                   alt={`${data.title} ${index + 1}`}
-                  className="object-contain object-center aspect-square h-full"
+                  className="object-contain object-center aspect-square h-full cursor-grab"
                   priority={index === 0}
                 />
               </CarouselItem>

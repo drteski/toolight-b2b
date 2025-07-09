@@ -68,7 +68,7 @@ const BannerData = ({ banners }: BannerProps) => {
                 width={banner.sizes.main.width}
                 height={banner.sizes.main.height}
                 alt={banner.title}
-                className="object-cover h-full w-full object-center"
+                className="object-cover h-full w-full object-center cursor-grab"
               />
             </CarouselItem>
           ))}
