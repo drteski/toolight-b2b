@@ -48,6 +48,12 @@ export const Categories: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'order',
+      type: 'number',
+      label: 'Kolejność',
+      required: true,
+    },
   ],
   admin: {
     useAsTitle: 'title',

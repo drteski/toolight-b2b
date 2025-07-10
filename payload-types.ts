@@ -210,6 +210,7 @@ export interface Category {
    */
   slug?: string | null;
   relatedMainMenuLink: number | MainMenu;
+  order: number;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -613,6 +614,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   relatedMainMenuLink?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

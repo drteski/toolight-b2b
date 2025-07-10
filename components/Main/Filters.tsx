@@ -28,18 +28,19 @@ const Categories = ({ locale }: Locale) => {
       grabCursor
       className="overflow-hidden h-fit w-full"
     >
-      {(data.docs === 0 ? [] : data.docs).map(
-        (category: { id: string; slug: string; title: string }) => (
-          <SwiperSlide key={category.id} className="w-auto!">
-            <Button
-              className="w-fit bg-white text-foreground border border-neutral-200 hover:bg-neutral-100"
-              asChild
-            >
-              <Link href={`${pathname}/${category.slug}`}>{category.title}</Link>
-            </Button>
-          </SwiperSlide>
-        ),
-      )}
+      {(data.docs === 0
+        ? []
+        : data.docs.sort((a: { order: number }, b: { order: number }) => a.order - b.order)
+      ).map((category: { id: string; slug: string; title: string }) => (
+        <SwiperSlide key={category.id} className="w-auto!">
+          <Button
+            className="w-fit bg-white text-foreground border border-neutral-200 hover:bg-neutral-100"
+            asChild
+          >
+            <Link href={`${pathname}/${category.slug}`}>{category.title}</Link>
+          </Button>
+        </SwiperSlide>
+      ))}
     </Swiper>
   )
 }
